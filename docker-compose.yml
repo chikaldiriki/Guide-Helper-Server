@@ -1,0 +1,19 @@
+version: "3.6"
+
+services:
+
+  database:
+    
+    build: ./src/main/sql/.
+    
+    command: mysql -uroot -pchikaldiriki.Password42
+  
+  server:
+  
+    build: .
+  
+    command: java -jar build/libs/GuideHelperServer-1.0-SNAPSHOT.jar
+    
+    ports:
+        - 8080:8080
+

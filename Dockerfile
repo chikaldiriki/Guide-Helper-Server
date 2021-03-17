@@ -7,5 +7,5 @@ COPY . /data
 RUN ./gradlew build
 
 EXPOSE 8080
-
-ENTRYPOINT ["java", "-jar", "build/libs/GuideHelperServer-1.0-SNAPSHOT.jar"]
+    
+#ENTRYPOINT ["java", "-jar", "build/libs/GuideHelperServer-1.0-SNAPSHOT.jar"]
