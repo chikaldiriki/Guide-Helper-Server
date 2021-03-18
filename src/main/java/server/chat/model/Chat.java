@@ -10,18 +10,18 @@ import org.springframework.data.util.Pair;
 @NoArgsConstructor
 @Setter
 @Accessors(chain = true)
-public class Dialog {
+public class Chat {
     @Id
     private String id;
 
-    private String dialogId;
+    private String chatId;
     private Pair<String, String> pairUserIds;
 
-    public Dialog setDialogId() {
+    public Chat setChatId() {
         if (pairUserIds.getFirst().compareTo(pairUserIds.getSecond()) > 0)
-            dialogId = pairUserIds.getFirst() + "$" + pairUserIds.getSecond();
+            chatId = pairUserIds.getFirst() + "$" + pairUserIds.getSecond();
         else
-            dialogId = pairUserIds.getSecond() + "$" + pairUserIds.getFirst();
+            chatId = pairUserIds.getSecond() + "$" + pairUserIds.getFirst();
         return this;
     }
 }

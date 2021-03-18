@@ -17,17 +17,17 @@ public class MessageService {
         return message;
     }
 
-    public long countNewMessages(String dialogId) {
-        // get count of unreaded messages in dialog
+    public long countNewMessages(String chatId) {
+        // get count of unreaded messages in chat
         return 0;
     }
 
-    public List<Message> findChatMessages(String dialogId) {
-        // find all messages from dialog
+    public List<Message> findChatMessages(String chatId) {
+        // find all messages from chat
         return null;
     }
 
-    public void updateStatus(String dialogId, MessageStatus status) {
+    public void updateStatus(String chatId, MessageStatus status) {
         // update status for last sended message OR for last unreaded messages
     }
 }
