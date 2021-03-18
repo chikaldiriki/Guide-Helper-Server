@@ -10,8 +10,6 @@ import java.util.List;
 
 @Service
 public class MessageService {
-    @Autowired
-    private MessageRepository repository;
 
     public Message save(Message message) {
         message.setStatus(MessageStatus.RECEIVED);
