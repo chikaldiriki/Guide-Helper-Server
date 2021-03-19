@@ -1,10 +1,10 @@
-package repositories;
+package server.repository;
 
-import models.Tag;
+import server.model.User;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface TagRepository extends CrudRepository<Tag, Integer> {
+public interface UserRepository extends CrudRepository<User, String> {
 
 }

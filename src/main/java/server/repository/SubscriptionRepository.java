@@ -1,6 +1,6 @@
-package repositories;
+package server.repository;
 
-import models.Subscription;
+import server.model.Subscription;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

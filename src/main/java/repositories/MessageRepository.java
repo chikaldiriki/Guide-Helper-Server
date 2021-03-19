@@ -1,6 +1,6 @@
-package repositories;
+package app.repositories;
 
-import models.Message;
+import app.models.Message;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

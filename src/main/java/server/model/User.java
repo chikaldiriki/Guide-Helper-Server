@@ -1,19 +1,57 @@
-package server.model;
+package models;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
-@Getter
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@AllArgsConstructor
+@NoArgsConstructor
 @Setter
+@Getter
+@Accessors(chain = true)
+@Table (name = "Users")
 public class User {
 
-    private Long id;
-    private String login;
-    private Boolean isGuide;
+    @Id
+    @Column(name = "user_mail")
+    private String userMail;
+
+    @Column (name = "is_guide")
+    private boolean isGuide;
+
+    @Column (name = "first_name")
     private String firstName;
+
+    @Column (name = "last_name")
     private String lastName;
-    private String email;
+
+    @Column (name = "phone_number")
     private String phoneNumber;
+
+    @Column (name = "city")
     private String city;
+
+    @Column (name = "description")
     private String description;
+
+    @Override
+    public String toString() {
+        return "models.User{" +
+                "user_mail=" + userMail +
+                ", is_guide=" + isGuide +
+                ", first_name=" + firstName +
+                ", last_name=" + lastName +
+                ", phone_number=" + phoneNumber +
+                ", city=" + city +
+                ", description=" + description +
+                "}";
+    }
 }

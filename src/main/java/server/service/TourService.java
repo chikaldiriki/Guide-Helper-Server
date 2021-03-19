@@ -5,7 +5,6 @@ import server.dto.TourDTO;
 
 import java.util.List;
 
-@Service
 public interface TourService {
     TourDTO getTour(Long tourId);
 
