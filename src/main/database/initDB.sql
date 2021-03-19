@@ -46,7 +46,7 @@ CREATE TABLE `GuideHelperDB`.`Orders` (
     ON DELETE CASCADE
     ON UPDATE CASCADE);
   
-CREATE TABLE `GuideHelperDB`.`Subscribtions` (
+CREATE TABLE `GuideHelperDB`.`Subscriptions` (
   `subscription_id` INT NOT NULL AUTO_INCREMENT,
   `user_mail` VARCHAR(320) NULL,
   `guide_mail` VARCHAR(320) NULL,
@@ -92,14 +92,14 @@ CREATE TABLE `GuideHelperDB`.`Messages` (
   `message_id` INT NOT NULL AUTO_INCREMENT,
   `chat_id` INT NOT NULL,
   `sender_mail` VARCHAR(320) NOT NULL,
-  `reciever_mail` VARCHAR(320) NOT NULL,
+  `receiver_mail` VARCHAR(320) NOT NULL,
   `text` TEXT NOT NULL,
   `dispatch_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `status` TINYINT(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`message_id`),
   INDEX `chat_id_idx` (`chat_id` ASC) VISIBLE,
   INDEX `sender_idx` (`sender_mail` ASC) VISIBLE,
-  INDEX `reciever_idx` (`reciever_mail` ASC) VISIBLE,
+  INDEX `receiver_idx` (`receiver_mail` ASC) VISIBLE,
   CONSTRAINT `chat_id`
     FOREIGN KEY (`chat_id`)
     REFERENCES `GuideHelperDB`.`Chats` (`chat_id`)
@@ -110,8 +110,8 @@ CREATE TABLE `GuideHelperDB`.`Messages` (
     REFERENCES `GuideHelperDB`.`Users` (`user_mail`)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
-  CONSTRAINT `reciever`
-    FOREIGN KEY (`reciever_mail`)
+  CONSTRAINT `receiver`
+    FOREIGN KEY (`receiver_mail`)
     REFERENCES `GuideHelperDB`.`Users` (`user_mail`)
     ON DELETE CASCADE
     ON UPDATE CASCADE);
