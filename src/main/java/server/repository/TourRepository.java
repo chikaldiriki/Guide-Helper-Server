@@ -1,6 +1,6 @@
-package repositories;
+package server.repository;
 
-import models.Tour;
+import server.model.Tour;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

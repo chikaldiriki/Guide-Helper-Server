@@ -1,11 +1,11 @@
 package server.controller;
 
-import app.models.Tour;
+import server.dto.TourDTO;
+import server.model.Tour;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import server.service.TourService;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -15,8 +15,8 @@ public class TourController {
     private TourService tourService;
 
     @GetMapping("/tours")
-    public List<Tour> getAllTours() {
-        return new ArrayList<>();
+    public List<TourDTO> getAllTours() {
+        return tourService.getAllTours();
     }
 
     @GetMapping("/tours/{city}")
