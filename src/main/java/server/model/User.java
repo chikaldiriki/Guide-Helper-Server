@@ -1,4 +1,4 @@
-package models;
+package server.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -44,7 +44,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "models.User{" +
+        return "server.model.User{" +
                 "user_mail=" + userMail +
                 ", is_guide=" + isGuide +
                 ", first_name=" + firstName +

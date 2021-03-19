@@ -1,6 +1,6 @@
-package app.repositories;
+package repositories;
 
-import app.models.Chat;
+import models.Chat;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
