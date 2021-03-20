@@ -1,7 +1,7 @@
-package server.service;
+package server.core.service;
 
 import org.springframework.stereotype.Service;
-import server.dto.UserDTO;
+import server.core.dto.UserDTO;
 
 @Service
 public interface UserService {

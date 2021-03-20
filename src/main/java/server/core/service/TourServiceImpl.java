@@ -1,11 +1,11 @@
-package server.service;
+package server.core.service;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import server.dto.TourDTO;
-import server.model.Tour;
-import server.repository.TourRepository;
+import server.core.dto.TourDTO;
+import server.core.model.Tour;
+import server.core.repository.TourRepository;
 
 import java.util.List;
 import java.util.stream.Collectors;

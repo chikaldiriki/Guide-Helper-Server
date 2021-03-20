@@ -1,7 +1,7 @@
-package server.service;
+package server.core.service;
 
 import org.springframework.stereotype.Service;
-import server.dto.TourDTO;
+import server.core.dto.TourDTO;
 
 import java.util.List;
 

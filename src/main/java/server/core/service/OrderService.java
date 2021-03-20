@@ -1,7 +1,7 @@
-package server.service;
+package server.core.service;
 
 import org.springframework.stereotype.Service;
-import server.dto.OrderDTO;
+import server.core.dto.OrderDTO;
 
 import java.util.List;
 

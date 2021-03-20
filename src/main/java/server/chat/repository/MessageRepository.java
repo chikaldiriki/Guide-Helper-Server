@@ -1,6 +1,6 @@
-package server.chat.repositories;
+package server.chat.repository;
 
-import server.chat.models.Message;
+import server.chat.model.Message;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

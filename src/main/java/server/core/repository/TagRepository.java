@@ -1,6 +1,6 @@
-package server.repository;
+package server.core.repository;
 
-import server.model.Tag;
+import server.core.model.Tag;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

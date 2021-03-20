@@ -8,7 +8,9 @@ import java.util.Optional;
 @Service
 public class ChatService {
 
-    public Optional<String> getChatId(Pair<String, String> pairUserIds, boolean createIfNotExist) {
+    public Optional<Integer> getChatId(String firstUserMail,
+                                      String secondUserMail,
+                                      boolean createIfNotExist) {
         return null;
     }
 }

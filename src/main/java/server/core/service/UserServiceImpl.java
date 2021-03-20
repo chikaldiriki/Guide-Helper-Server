@@ -1,10 +1,12 @@
-package server.service;
+package server.core.service;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import server.dto.UserDTO;
-import server.repository.UserRepository;
+import org.springframework.stereotype.Service;
+import server.core.dto.UserDTO;
+import server.core.repository.UserRepository;
 
+@Service
 public class UserServiceImpl implements UserService {
 
     @Autowired

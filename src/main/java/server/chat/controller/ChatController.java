@@ -27,12 +27,13 @@ public class ChatController {
 
     @MessageMapping("/chat")
     public void processMessage(@Payload Message message) {
-        Optional<String> chatId = chatService
-                .getChatId(Pair.of(message.getSenderId(), message.getReceiverId()), true);
-        message.setDialogId(chatId.get());
+        Optional<Integer> chatId = chatService
+                .getChatId(message.getSenderMail(), message.getReceiverMail(), true);
+
+        message.setChatId(chatId.get());
 
         messagingTemplate.convertAndSendToUser(
-                message.getReceiverId(), "/messages", messageService.save(message));
+                message.getReceiverMail(), "/messages", messageService.save(message));
     }
 
     @GetMapping("/messages/{chatId}")

@@ -1,6 +1,6 @@
-package server.repository;
+package server.core.repository;
 
-import server.model.Order;
+import server.core.model.Order;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
