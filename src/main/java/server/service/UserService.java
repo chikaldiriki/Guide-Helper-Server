@@ -8,5 +8,5 @@ public interface UserService {
 
     void addUser(UserDTO userDTO);
 
-    UserDTO getUser(Long userId);
+    UserDTO getUser(String userId);
 }
