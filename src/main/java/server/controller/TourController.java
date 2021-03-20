@@ -1,7 +1,6 @@
 package server.controller;
 
 import server.dto.TourDTO;
-import server.model.Tour;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import server.service.TourService;
@@ -20,8 +19,8 @@ public class TourController {
     }
 
     @GetMapping("/tours/{city}")
-    public String getToursByCity(@PathVariable String city) {
-        return null;
+    public List<TourDTO> getToursByCity(@PathVariable String city) {
+        return tourService.getToursByCity(city);
     }
 
     @GetMapping("/tours/{userId}/coming")
@@ -40,8 +39,8 @@ public class TourController {
     }
 
     @PostMapping("/tours")
-    public String addTour() {
-        return null;
+    public void addTour(@RequestBody TourDTO tourDTO) {
+        tourService.addTour(tourDTO);
     }
 
     @PutMapping("/tours/{tourId}")
@@ -50,7 +49,7 @@ public class TourController {
     }
 
     @DeleteMapping("/tours/{tourId}")
-    public String deleteTour(@PathVariable Long tourId) {
-        return null;
+    public void deleteTour(@PathVariable Integer tourId) {
+        tourService.deleteTour(tourId);
     }
 }

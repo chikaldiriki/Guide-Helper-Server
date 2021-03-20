@@ -13,6 +13,7 @@ public class TourDTO {
     private String title;
     private String city;
     private String description;
-    private UserDTO guide;
+    private String guide;
     private Long cost;
+    private Byte[] image;
 }

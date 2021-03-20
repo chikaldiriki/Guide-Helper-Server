@@ -13,9 +13,9 @@ public interface TourService {
 
     List<TourDTO> getToursByCity(String city);
 
-    List<TourDTO> getComingTours(Long userId);
+    List<TourDTO> getComingTours(String userId);
 
-    List<TourDTO> getGuideTours(Long guideId);
+    List<TourDTO> getGuideTours(String guideId);
 
     List<TourDTO> getFavoriteTours(Long userId);
 
@@ -23,5 +23,5 @@ public interface TourService {
 
     void updateTour(TourDTO tourDTO);
 
-    void deleteTour(Long tourId);
+    void deleteTour(Integer tourId);
 }

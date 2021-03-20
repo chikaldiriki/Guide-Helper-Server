@@ -2,12 +2,11 @@ package server.service;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Service;
 import server.dto.TourDTO;
+import server.model.Tour;
 import server.repository.TourRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -17,6 +16,9 @@ public class TourServiceImpl implements TourService {
 
     @Autowired
     private TourRepository tourRepository;
+
+    @Autowired
+    private OrderService orderService;
 
     @Override
     public TourDTO getTour(Integer tourId) {
@@ -32,17 +34,27 @@ public class TourServiceImpl implements TourService {
 
     @Override
     public List<TourDTO> getToursByCity(String city) {
-        return null;
+        return getAllTours()
+                .stream()
+                .filter(tourDTO -> tourDTO.getCity().equals(city))
+                .collect(Collectors.toList());
     }
 
     @Override
-    public List<TourDTO> getComingTours(Long userId) {
-        return null;
+    public List<TourDTO> getComingTours(String userId) {
+        return orderService.getAllOrders()
+                .stream()
+                .filter(orderDTO -> orderDTO.getCustomerMail().equals(userId))
+                .flatMap(orderDTO -> getAllTours().stream().filter(tourDTO -> orderDTO.getTourId() == tourDTO.getId()))
+                .collect(Collectors.toList());
     }
 
     @Override
-    public List<TourDTO> getGuideTours(Long guideId) {
-        return null;
+    public List<TourDTO> getGuideTours(String guideId) {
+        return getAllTours()
+                .stream()
+                .filter(tourDTO -> tourDTO.getGuide().equals(guideId))
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -52,16 +64,15 @@ public class TourServiceImpl implements TourService {
 
     @Override
     public void addTour(TourDTO tourDTO) {
-
+        tourRepository.save(new ModelMapper().map(tourDTO, Tour.class)); // TODO
     }
 
     @Override
     public void updateTour(TourDTO tourDTO) {
-
     }
 
     @Override
-    public void deleteTour(Long tourId) {
-
+    public void deleteTour(Integer tourId) {
+        tourRepository.deleteById(tourId);
     }
 }
