@@ -1,27 +1,33 @@
-package server.chat.model;
+package server.chat.models;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.Accessors;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.util.Pair;
 
-@Data
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
+@Getter
 @Accessors(chain = true)
+@Table(name = "Chats")
 public class Chat {
+
     @Id
-    private String id;
+    @Column (name = "chat_id")
+    private int id;
 
-    private String chatId;
-    private Pair<String, String> pairUserIds;
+    @Column (name = "first_user_mail")
+    private String firstUserMail;
 
-    public Chat setChatId() {
-        if (pairUserIds.getFirst().compareTo(pairUserIds.getSecond()) > 0)
-            chatId = pairUserIds.getFirst() + "$" + pairUserIds.getSecond();
-        else
-            chatId = pairUserIds.getSecond() + "$" + pairUserIds.getFirst();
-        return this;
-    }
+    @Column (name = "second_user_mail")
+    private String secondUserMail;
+
 }

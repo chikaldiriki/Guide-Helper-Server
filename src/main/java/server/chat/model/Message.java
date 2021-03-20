@@ -1,22 +1,46 @@
-package server.chat.model;
+package server.chat.models;
 
-import lombok.*;
-import org.springframework.data.annotation.Id;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.Accessors;
 
-import java.util.Date;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import java.sql.Timestamp;
 
-@Data
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @Setter
+@Getter
+@Accessors(chain = true)
+@Table(name = "Messages")
 public class Message {
+
     @Id
-    private String id;
-    private String dialogId;
-    private String senderId;
-    private String receiverId;
-    private String data;
-    private Date dispatchTime;
-    private MessageStatus status;
+    @Column (name = "message_id")
+    private int id;
+
+    @Column (name = "chat_id")
+    private int chatId;
+
+    @Column (name = "sender_mail")
+    private String senderMail;
+
+    @Column (name = "reciever_mail") //TODO: receiver
+    private String receiverMail;
+
+    @Column (name = "text")
+    private String text;
+
+    @Column (name = "dispatch_time")
+    private Timestamp dispatchTime;
+
+    @Column (name = "status")
+    private boolean status;
+
 }
