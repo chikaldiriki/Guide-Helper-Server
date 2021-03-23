@@ -1,26 +1,24 @@
 package server.core.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import server.core.dto.UserDTO;
 import server.core.service.UserService;
 
 @RestController
+@RequestMapping("/users")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
-    @PostMapping("/users")
+    @PostMapping("")
     void addUser(@RequestBody UserDTO userDTO) {
         userService.addUser(userDTO);
     }
 
-    @GetMapping("/users/{userId}")
-    public UserDTO getUser(String userId) {
+    @GetMapping("/{userId}")
+    public UserDTO getUser(@PathVariable String userId) {
         return userService.getUser(userId);
     }
 }
