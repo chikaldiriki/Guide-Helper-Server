@@ -1,4 +1,4 @@
-package server.core.service;
+package server.core;
 
 import org.springframework.stereotype.Service;
 import server.core.dto.TourDTO;

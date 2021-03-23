@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import server.core.dto.OrderDTO;
 import server.core.repository.OrderRepository;
+import server.core.service.OrderService;
 
 import java.util.List;
 import java.util.stream.Collectors;

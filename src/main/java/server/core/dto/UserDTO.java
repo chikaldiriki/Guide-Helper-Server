@@ -10,7 +10,7 @@ import lombok.experimental.Accessors;
 public class UserDTO {
 
     private String userMail;
-    private Boolean isGuide;
+    private boolean isGuide;
     private String firstName;
     private String lastName;
     private String phoneNumber;
