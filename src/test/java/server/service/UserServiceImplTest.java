@@ -10,9 +10,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.modelmapper.ModelMapper;
-import server.core.UserService;
-import server.core.UserServiceImpl;
-import server.core.dto.UserDTO;
+import server.core.service.UserService;
+import server.core.service.UserServiceImpl;
 import server.core.model.User;
 import server.core.repository.UserRepository;
 

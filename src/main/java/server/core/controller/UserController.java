@@ -3,7 +3,7 @@ package server.core.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import server.core.dto.UserDTO;
-import server.core.UserService;
+import server.core.service.UserService;
 
 @RestController
 @RequestMapping("/users")

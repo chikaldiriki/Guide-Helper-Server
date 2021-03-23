@@ -3,7 +3,7 @@ package server.core.controller;
 import server.core.dto.TourDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import server.core.TourService;
+import server.core.service.TourService;
 
 import java.util.List;
 
