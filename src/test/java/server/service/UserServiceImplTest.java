@@ -30,7 +30,7 @@ public class UserServiceImplTest {
     }
 
     @Test
-    public void testGivenUserServiceWhenLoadingUserByUsernameThenReturnCorrectUser() {
+    public void testGetUser() {
         User user = new User()
                 .setUserMail("johndoe@example.com")
                 .setCity("Moscow")
@@ -39,8 +39,6 @@ public class UserServiceImplTest {
                 .setGuide(true)
                 .setDescription("I like discrete math...")
                 .setPhoneNumber("123456789");
-
-        userRepo.save(user);
 
         given(userRepo.findById("john@example.com")).willReturn(Optional.of(user));
 
