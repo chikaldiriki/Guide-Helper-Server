@@ -55,23 +55,4 @@ public class User {
                 ", description=" + description +
                 "}";
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return isGuide == user.isGuide
-                && Objects.equals(userMail, user.userMail)
-                && Objects.equals(firstName, user.firstName)
-                && Objects.equals(lastName, user.lastName)
-                && Objects.equals(phoneNumber, user.phoneNumber)
-                && Objects.equals(city, user.city)
-                && Objects.equals(description, user.description);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(userMail, isGuide, firstName, lastName, phoneNumber, city, description);
-    }
 }

@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.modelmapper.ModelMapper;
+import server.core.dto.UserDTO;
 import server.core.service.UserService;
 import server.core.service.UserServiceImpl;
 import server.core.model.User;
@@ -43,7 +44,7 @@ public class UserServiceImplTest {
 
         given(userRepo.findById("john@example.com")).willReturn(Optional.of(user));
 
-        Assertions.assertEquals(user,
-                new ModelMapper().map(userService.getUser("john@example.com"), User.class));
+        Assertions.assertEquals(userService.getUser("john@example.com"),
+                new ModelMapper().map(user, UserDTO.class));
     }
 }
