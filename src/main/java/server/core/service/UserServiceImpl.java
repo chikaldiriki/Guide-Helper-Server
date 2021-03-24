@@ -6,12 +6,11 @@ import org.springframework.stereotype.Service;
 import server.core.dto.UserDTO;
 import server.core.model.User;
 import server.core.repository.UserRepository;
-import server.core.service.UserService;
 
 @Service
 public class UserServiceImpl implements UserService {
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository) {

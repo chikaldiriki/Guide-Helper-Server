@@ -11,8 +11,12 @@ import java.util.List;
 @RequestMapping("/tours")
 public class TourController {
 
+    private final TourService tourService;
+
     @Autowired
-    private TourService tourService;
+    public TourController(TourService tourService) {
+        this.tourService = tourService;
+    }
 
     @GetMapping("")
     public List<TourDTO> getAllTours() {

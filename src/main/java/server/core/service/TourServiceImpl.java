@@ -14,11 +14,15 @@ import java.util.stream.StreamSupport;
 @Service
 public class TourServiceImpl implements TourService {
 
-    @Autowired
     private TourRepository tourRepository;
 
-    @Autowired
     private OrderService orderService;
+
+    @Autowired
+    public TourServiceImpl(TourRepository tourRepository, OrderService orderService) {
+        this.tourRepository = tourRepository;
+        this.orderService = orderService;
+    }
 
     @Override
     public TourDTO getTour(Integer tourId) {

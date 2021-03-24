@@ -9,8 +9,12 @@ import server.core.service.UserService;
 @RequestMapping("/users")
 public class UserController {
 
-    @Autowired
     private UserService userService;
+
+    @Autowired
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @PostMapping("")
     void addUser(@RequestBody UserDTO userDTO) {
