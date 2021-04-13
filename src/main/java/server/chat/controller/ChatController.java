@@ -1,48 +1,57 @@
 package server.chat.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.util.Pair;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
 import server.chat.model.Message;
-import server.chat.service.MessageService;
 import server.chat.service.ChatService;
+import server.chat.service.MessageService;
 
 import java.util.List;
-import java.util.Optional;
 
-@Controller
+@RestController
 public class ChatController {
 
-    @Autowired
-    private SimpMessagingTemplate messagingTemplate;
-    @Autowired
-    private MessageService messageService;
-    @Autowired
-    private ChatService chatService;
+    private final SimpMessagingTemplate messagingTemplate;
 
-    @MessageMapping("/chat")
+    private final MessageService messageService;
+
+    private final ChatService chatService;
+
+    @Autowired
+    public ChatController(SimpMessagingTemplate messagingTemplate,
+                          MessageService messageService,
+                          ChatService chatService) {
+        this.messagingTemplate = messagingTemplate;
+        this.messageService = messageService;
+        this.chatService = chatService;
+    }
+
+    @MessageMapping("chat")
     public void processMessage(@Payload Message message) {
-        Optional<Integer> chatId = chatService
+        int chatId = chatService
                 .getChatId(message.getSenderMail(), message.getReceiverMail(), true);
+        System.out.println(chatId);
+        Message savedMessage = messageService.save(message.setChatId(chatId));
+        messagingTemplate.convertAndSend("/queue/messages/228", savedMessage);
+    }
 
-        message.setChatId(chatId.get());
-
-        messagingTemplate.convertAndSendToUser(
-                message.getReceiverMail(), "/messages", messageService.save(message));
+    @GetMapping("/messages/chat/{firstUserId}/{secondUserId}")
+    public int getChatId(@PathVariable String firstUserId, @PathVariable String secondUserId) {
+        return chatService.getChatId(firstUserId, secondUserId, false);
     }
 
     @GetMapping("/messages/{chatId}")
-    public List<Message> getDialogMessages(@PathVariable String chatId) {
+    public List<Message> getDialogMessages(@PathVariable int chatId) {
         return messageService.findChatMessages(chatId);
     }
 
     @GetMapping("/messages/{chatId}/count")
-    public Long countNewMessages(@PathVariable String chatId) {
+    public Long countNewMessages(@PathVariable int chatId) {
         return messageService.countNewMessages(chatId);
     }
 }

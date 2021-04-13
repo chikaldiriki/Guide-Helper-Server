@@ -19,14 +19,16 @@ public class WebSocketConfigurer implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
-        config.enableSimpleBroker("/user");
-        config.setUserDestinationPrefix("/user");
+        config.enableSimpleBroker("/topic", "/queue");
+
+        config.setApplicationDestinationPrefixes("/topic", "/queue"); // prefix in client queries
+        //config.setUserDestinationPrefix("/user");
     }
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry
-                .addEndpoint("/ws")
+                .addEndpoint("/chat-endpoint")
                 .setAllowedOrigins("*")
                 .withSockJS();
     }

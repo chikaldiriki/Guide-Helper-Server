@@ -1,9 +1,6 @@
 package server.chat.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.Accessors;
 
 import javax.persistence.Column;
@@ -13,6 +10,7 @@ import javax.persistence.Table;
 import java.sql.Timestamp;
 
 @Entity
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
@@ -22,25 +20,24 @@ import java.sql.Timestamp;
 public class Message {
 
     @Id
-    @Column (name = "message_id")
+    @Column(name = "message_id")
     private int id;
 
-    @Column (name = "chat_id")
+    @Column(name = "chat_id")
     private int chatId;
 
-    @Column (name = "sender_mail")
+    @Column(name = "sender_mail")
     private String senderMail;
 
-    @Column (name = "reciever_mail") //TODO: receiver
+    @Column(name = "receiver_mail") //TODO: receiver
     private String receiverMail;
 
-    @Column (name = "text")
+    @Column(name = "text")
     private String text;
 
-    @Column (name = "dispatch_time")
+    @Column(name = "dispatch_time")
     private Timestamp dispatchTime;
 
-    @Column (name = "status")
+    @Column(name = "status")
     private boolean status;
-
 }
