@@ -6,6 +6,9 @@ import org.springframework.stereotype.Service;
 import server.core.dto.TourDTO;
 import server.core.model.Tour;
 import server.core.repository.TourRepository;
+import server.specifications.GenericSpecification;
+import server.specifications.SearchCriteria;
+import server.specifications.SearchOperation;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -38,9 +41,10 @@ public class TourServiceImpl implements TourService {
 
     @Override
     public List<TourDTO> getToursByCity(String city) {
-        return getAllTours()
-                .stream()
-                .filter(tourDTO -> tourDTO.getCity().equals(city))
+        // GenericSpecification example
+        GenericSpecification<Tour> spec = new GenericSpecification<>("city", "eq", city);
+        return tourRepository.findAll(spec).stream()
+                .map(tour -> new ModelMapper().map(tour, TourDTO.class))
                 .collect(Collectors.toList());
     }
 

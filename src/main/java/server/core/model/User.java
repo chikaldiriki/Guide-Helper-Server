@@ -45,7 +45,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "server.core.model.User{" +
+        return "User{" +
                 "user_mail=" + userMail +
                 ", is_guide=" + isGuide +
                 ", first_name=" + firstName +

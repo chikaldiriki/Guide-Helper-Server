@@ -17,7 +17,7 @@ import javax.persistence.Table;
 @Setter
 @Getter
 @Accessors(chain = true)
-@Table(name = "Subscriptions") //TODO: subscriPtions
+@Table(name = "Subscriptions")
 public class Subscription {
 
     @Id

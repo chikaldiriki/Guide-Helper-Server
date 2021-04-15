@@ -29,7 +29,7 @@ public class Message {
     @Column(name = "sender_mail")
     private String senderMail;
 
-    @Column(name = "receiver_mail") //TODO: receiver
+    @Column(name = "receiver_mail")
     private String receiverMail;
 
     @Column(name = "text")
