@@ -18,6 +18,7 @@ CREATE TABLE `GuideHelperDB`.`Tours` (
   `city` TINYTEXT NOT NULL,
   `guide_mail` VARCHAR(320) NOT NULL,
   `cost` INT UNSIGNED NULL DEFAULT 0,
+  `description` TEXT NULL,
   `tour_image` MEDIUMBLOB NULL,
   PRIMARY KEY (`tour_id`),
   INDEX `guide_mail_idx` (`guide_mail` ASC) VISIBLE,
@@ -120,6 +121,9 @@ INSERT INTO `GuideHelperDB`.`Users`
  (`user_mail`, `is_guide`, `first_name`, `last_name`, `phone_number`, `city`, `description`)
  VALUES ('890vovamen@gmail.com', '0', 'Tester', 'Testov', '+7-977-777-77-77', 'Spb', 'Test Query');
 
+INSERT INTO `GuideHelperDB`.`Tours`
+ (`tour_id`, `title`, `city`, `guide_mail`, `cost`, `description`, `tour_image`)
+ VALUES (1, 'test tour', 'saintpy', '890vovamen@gmail.com', 100, 'test description', null);
 
   
 

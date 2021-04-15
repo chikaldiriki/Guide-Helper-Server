@@ -36,6 +36,9 @@ public class Tour {
     @Column (name = "cost")
     private int cost;
 
+    @Column (name = "description")
+    private String description;
+
     @Column (name = "tour_image")
     private Byte[] image;
 

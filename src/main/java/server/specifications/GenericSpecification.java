@@ -20,7 +20,7 @@ public class GenericSpecification<T> implements Specification<T> {
     public GenericSpecification(String key, String operation, List<Object> args) {
         searchCriteria = new SearchCriteria(key, operation, args);
     }
-    
+
     public GenericSpecification(String key, String operation, Object argument) {
         searchCriteria = new SearchCriteria(key, operation, argument);
     }
