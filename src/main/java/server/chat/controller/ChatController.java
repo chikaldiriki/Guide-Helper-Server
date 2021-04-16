@@ -34,7 +34,7 @@ public class ChatController {
     @MessageMapping("chat")
     public void processMessage(@Payload Message message) {
         int chatId = chatService
-                .getChatId(message.getSenderMail(), message.getReceiverMail(), true);
+                .getChatId(message.getSenderMail(), message.getReceiverMail());
         System.out.println(chatId);
         Message savedMessage = messageService.save(message.setChatId(chatId));
         messagingTemplate.convertAndSend("/queue/messages/228", savedMessage);
@@ -42,7 +42,7 @@ public class ChatController {
 
     @GetMapping("/messages/chat/{firstUserId}/{secondUserId}")
     public int getChatId(@PathVariable String firstUserId, @PathVariable String secondUserId) {
-        return chatService.getChatId(firstUserId, secondUserId, false);
+        return chatService.getChatId(firstUserId, secondUserId);
     }
 
     @GetMapping("/messages/{chatId}")

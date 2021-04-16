@@ -1,9 +1,11 @@
 package server.chat.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import server.chat.model.Message;
 import server.chat.repository.MessageRepository;
+import server.specifications.GenericSpecification;
 
 import java.util.Comparator;
 import java.util.List;
@@ -29,10 +31,8 @@ public class MessageService {
     }
 
     public List<Message> findChatMessages(int chatId) {
-        return StreamSupport.stream(messageRepository.findAll().spliterator(), true)
-                .filter(message -> message.getChatId() == chatId)
-                .sorted(Comparator.comparing(message -> message.getDispatchTime().getTime()))
-                .collect(Collectors.toList());
+        GenericSpecification<Message> spec = new GenericSpecification<>("chatId", "eq", chatId);
+        return messageRepository.findAll(spec, Sort.by(Sort.Direction.ASC, "dispatchTime"));
     }
 
     public void updateStatus(String chatId) {

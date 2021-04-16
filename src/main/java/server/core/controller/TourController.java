@@ -28,18 +28,23 @@ public class TourController {
         return tourService.getToursByCity(city);
     }
 
+    @GetMapping("/{city}?sorted=cost")
+    public List<TourDTO> getToursByCitySortedByCost(@PathVariable String city) {
+        return tourService.getToursByCitySortedByCost(city);
+    }
+
     @GetMapping("/{userId}/coming")
-    public String getComingUserTours(@PathVariable Long userId) {
-        return null;
+    public List<TourDTO> getComingUserTours(@PathVariable String userId) {
+        return tourService.getComingTours(userId);
     }
 
     @GetMapping("/{guideId}/coming")
-    public String getComingGuideTours(@PathVariable Long guideId) {
+    public List<TourDTO> getComingGuideTours(@PathVariable String guideId) {
         return null;
     }
 
     @GetMapping("/{userId}/favorites")
-    public String getFavoriteTours(@PathVariable Long userId) {
+    public List<TourDTO> getFavoriteTours(@PathVariable String userId) {
         return null;
     }
 

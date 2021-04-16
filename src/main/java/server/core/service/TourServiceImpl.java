@@ -2,24 +2,29 @@ package server.core.service;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import server.core.dto.OrderDTO;
 import server.core.dto.TourDTO;
 import server.core.model.Tour;
 import server.core.repository.TourRepository;
 import server.specifications.GenericSpecification;
-import server.specifications.SearchCriteria;
-import server.specifications.SearchOperation;
 
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 @Service
 public class TourServiceImpl implements TourService {
 
-    private TourRepository tourRepository;
+    private final TourRepository tourRepository;
 
-    private OrderService orderService;
+    private final OrderService orderService;
+
+    private List<TourDTO> tourToDTO(List<Tour> tours) {
+        return tours.stream()
+                .map(tour -> new ModelMapper().map(tour, TourDTO.class))
+                .collect(Collectors.toList());
+    }
 
     @Autowired
     public TourServiceImpl(TourRepository tourRepository, OrderService orderService) {
@@ -34,35 +39,38 @@ public class TourServiceImpl implements TourService {
 
     @Override
     public List<TourDTO> getAllTours() {
-        return StreamSupport.stream(tourRepository.findAll().spliterator(), false)
-                .map(tour -> new ModelMapper().map(tour, TourDTO.class))
-                .collect(Collectors.toList());
+        return tourToDTO(tourRepository.findAll());
     }
 
     @Override
     public List<TourDTO> getToursByCity(String city) {
-        // GenericSpecification example
         GenericSpecification<Tour> spec = new GenericSpecification<>("city", "eq", city);
-        return tourRepository.findAll(spec).stream()
-                .map(tour -> new ModelMapper().map(tour, TourDTO.class))
-                .collect(Collectors.toList());
+        return tourToDTO(tourRepository.findAll(spec));
+    }
+
+    @Override
+    public List<TourDTO> getToursByCitySortedByCost(String city) {
+        GenericSpecification<Tour> spec = new GenericSpecification<>("city", "eq", city);
+        return tourToDTO(tourRepository.findAll(spec, Sort.by(Sort.Direction.ASC, "cost")));
     }
 
     @Override
     public List<TourDTO> getComingTours(String userId) {
-        return orderService.getAllOrders()
-                .stream()
-                .filter(orderDTO -> orderDTO.getCustomerMail().equals(userId))
-                .flatMap(orderDTO -> getAllTours().stream().filter(tourDTO -> orderDTO.getTourId() == tourDTO.getId()))
+        List<Integer> tourIds = orderService.getOrdersByUser(userId).stream()
+                .map(OrderDTO::getTourId)
                 .collect(Collectors.toList());
+        GenericSpecification<Tour> spec = new GenericSpecification<>("id", "in", tourIds);
+        return tourToDTO(tourRepository.findAll(spec));
+        /*return orderService.getOrdersByUser(userId)
+                .stream()
+                .flatMap(orderDTO -> getAllTours().stream().filter(tourDTO -> orderDTO.getTourId() == tourDTO.getId()))
+                .collect(Collectors.toList());*/
     }
 
     @Override
     public List<TourDTO> getGuideTours(String guideId) {
-        return getAllTours()
-                .stream()
-                .filter(tourDTO -> tourDTO.getGuide().equals(guideId))
-                .collect(Collectors.toList());
+        GenericSpecification<Tour> spec = new GenericSpecification<>("guideId", "eq", guideId);
+        return tourToDTO(tourRepository.findAll(spec));
     }
 
     @Override
