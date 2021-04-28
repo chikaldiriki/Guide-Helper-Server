@@ -17,20 +17,16 @@ import javax.persistence.Table;
 @Setter
 @Getter
 @Accessors(chain = true)
-@Table(name = "Chats")
-public class Chat {
+@Table(name = "Keywords")
+public class Keyword {
 
     @Id
-    @Column (name = "chat_id")
+    @Column(name="keyword_id")
     private int id;
 
-    @Column (name = "first_user_mail")
-    private String firstUserMail;
+    @Column(name="chat_id")
+    private int chatId;
 
-    @Column (name = "second_user_mail")
-    private String secondUserMail;
-
-    @Column (name = "uptodate")
-    private boolean upToDate;
-
+    @Column(name="word")
+    private String word;
 }

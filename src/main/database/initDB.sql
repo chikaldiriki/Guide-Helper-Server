@@ -75,6 +75,7 @@ CREATE TABLE `GuideHelperDB`.`Chats` (
   `chat_id` INT NOT NULL AUTO_INCREMENT,
   `first_user_mail` VARCHAR(320) NOT NULL,
   `second_user_mail` VARCHAR(320) NOT NULL,
+  `uptodate` TINYINT(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`chat_id`),
   INDEX `first_user_idx` (`first_user_mail` ASC) VISIBLE,
   INDEX `second_user_idx` (`second_user_mail` ASC) VISIBLE,
@@ -116,14 +117,30 @@ CREATE TABLE `GuideHelperDB`.`Messages` (
     REFERENCES `GuideHelperDB`.`Users` (`user_mail`)
     ON DELETE CASCADE
     ON UPDATE CASCADE);
+    
+CREATE TABLE `GuideHelperDB`.`Keywords` (
+  `keyword_id` INT NOT NULL,
+  `chat_id` INT NOT NULL,
+  `word` TINYTEXT NOT NULL,
+  PRIMARY KEY (`keyword_id`),
+  INDEX `fk_chat_id_idx` (`chat_id` ASC) VISIBLE,
+  CONSTRAINT `fk_chat_id`
+    FOREIGN KEY (`chat_id`)
+    REFERENCES `GuideHelperDB`.`Chats` (`chat_id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE);
   
 INSERT INTO `GuideHelperDB`.`Users`
  (`user_mail`, `is_guide`, `first_name`, `last_name`, `phone_number`, `city`, `description`)
- VALUES ('890vovamen@gmail.com', '0', 'Tester', 'Testov', '+7-977-777-77-77', 'Spb', 'Test Query');
+ VALUES ('firstUser@gmail.com', '0', 'Tester', 'Testov', '+7-977-777-77-77', 'Spb', 'Test Query 1');
+ 
+INSERT INTO `GuideHelperDB`.`Users`
+ (`user_mail`, `is_guide`, `first_name`, `last_name`, `phone_number`, `city`, `description`)
+ VALUES ('secondUser@gmail.com', '1', 'Kek', 'Kekov', '+7-977-777-77-77', 'Spb', 'Test Query 2');
 
 INSERT INTO `GuideHelperDB`.`Tours`
  (`tour_id`, `title`, `city`, `guide_mail`, `cost`, `description`, `tour_image`)
- VALUES (1, 'test tour', 'saintpy', '890vovamen@gmail.com', 100, 'test description', null);
+ VALUES (1, 'test tour', 'saintpy', 'secondUser@gmail.com', 100, 'test description', null);
 
   
 
