@@ -16,20 +16,16 @@ import java.util.stream.Collectors;
 @Service
 public class TourServiceImpl implements TourService {
 
-    private final TourRepository tourRepository;
+    @Autowired
+    private TourRepository tourRepository;
 
-    private final OrderService orderService;
+    @Autowired
+    private OrderService orderService;
 
     private List<TourDTO> tourToDTO(List<Tour> tours) {
         return tours.stream()
                 .map(tour -> new ModelMapper().map(tour, TourDTO.class))
                 .collect(Collectors.toList());
-    }
-
-    @Autowired
-    public TourServiceImpl(TourRepository tourRepository, OrderService orderService) {
-        this.tourRepository = tourRepository;
-        this.orderService = orderService;
     }
 
     @Override

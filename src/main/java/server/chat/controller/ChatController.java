@@ -1,11 +1,10 @@
 package server.chat.controller;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.Payload;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import server.chat.dto.ChatDTO;
 import server.chat.dto.MessageDTO;
@@ -19,28 +18,18 @@ import java.util.List;
 @RestController
 public class ChatController {
 
-    private final SimpMessagingTemplate messagingTemplate;
-
-    private final MessageService messageService;
-
-    private final ChatService chatService;
+    @Autowired
+    private MessageService messageService;
 
     @Autowired
-    public ChatController(SimpMessagingTemplate messagingTemplate,
-                          MessageService messageService,
-                          ChatService chatService) {
-        this.messagingTemplate = messagingTemplate;
-        this.messageService = messageService;
-        this.chatService = chatService;
-    }
+    private ChatService chatService;
 
-    @MessageMapping("chat")
-    public void processMessage(@Payload Message message) {
+    @GetMapping
+    public void processMessage(@RequestBody MessageDTO messageDTO) {
+        Message message = new ModelMapper().map(messageDTO, Message.class);
         int chatId = chatService
                 .getChatId(message.getSenderMail(), message.getReceiverMail());
-        System.out.println(chatId);
-        Message savedMessage = messageService.save(message.setChatId(chatId));
-        messagingTemplate.convertAndSend("/queue/messages/228", savedMessage);
+        messageService.save(message.setChatId(chatId));
     }
 
     // create chat if not exist

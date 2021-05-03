@@ -1,5 +1,6 @@
 package server.chat.service;
 
+import io.micrometer.core.lang.Nullable;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
@@ -29,6 +30,7 @@ public class ChatService {
                 .collect(Collectors.toList());
     }
 
+    @Nullable
     private Chat getChatByUsers(String firstUserMail, String secondUserMail) {
         GenericSpecification<Chat> specFirstUser =
                 new GenericSpecification<>("firstUserMail", "eq", firstUserMail);

@@ -24,9 +24,10 @@ public class MessageService {
                 .collect(Collectors.toList());
     }
 
-    public Message save(Message message) {
-        //message.setStatus(false);
-        return messageRepository.save(message);
+    public MessageDTO save(Message messageDTO) {
+        Message message = new ModelMapper().map(messageDTO, Message.class);
+        Message savedMessage = messageRepository.save(message);
+        return new ModelMapper().map(savedMessage, MessageDTO.class);
     }
 
     public List<MessageDTO> findChatMessages(int chatId) {
