@@ -45,13 +45,13 @@ public class TourServiceImpl implements TourService {
     }
 
     @Override
-    public List<TourDTO> getToursByCitySortedByCost(String city) {
+    public List<TourDTO> getToursByCitySortedByParameter(String city, String parameter) {
         GenericSpecification<Tour> spec = new GenericSpecification<>("city", "eq", city);
-        return tourToDTO(tourRepository.findAll(spec, Sort.by(Sort.Direction.ASC, "cost")));
+        return tourToDTO(tourRepository.findAll(spec, Sort.by(Sort.Direction.ASC, parameter)));
     }
 
     @Override
-    public List<TourDTO> getComingTours(String userId) {
+    public List<TourDTO> getComingTours(String userId) { // TODO
         List<Integer> tourIds = orderService.getOrdersByUser(userId).stream()
                 .map(OrderDTO::getTourId)
                 .collect(Collectors.toList());

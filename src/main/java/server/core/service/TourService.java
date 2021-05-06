@@ -13,7 +13,7 @@ public interface TourService {
 
     List<TourDTO> getToursByCity(String city);
 
-    List<TourDTO> getToursByCitySortedByCost(String city);
+    List<TourDTO> getToursByCitySortedByParameter(String city, String parameter);
 
     List<TourDTO> getComingTours(String userId);
 

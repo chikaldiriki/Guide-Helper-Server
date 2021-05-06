@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import server.core.service.TourService;
 
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/tours")
@@ -20,13 +21,12 @@ public class TourController {
     }
 
     @GetMapping("/{city}")
-    public List<TourDTO> getToursByCity(@PathVariable String city) {
-        return tourService.getToursByCity(city);
-    }
-
-    @GetMapping("/{city}?sorted=cost")
-    public List<TourDTO> getToursByCitySortedByCost(@PathVariable String city) {
-        return tourService.getToursByCitySortedByCost(city);
+    public List<TourDTO> getToursByCitySortedByOptionalParameter(@PathVariable String city,
+                                                                 @RequestParam(required = false) String sorted) {
+        if (Objects.equals(sorted, null)) {
+            return tourService.getToursByCity(city);
+        }
+        return tourService.getToursByCitySortedByParameter(city, sorted);
     }
 
     @GetMapping("/{userId}/coming")
