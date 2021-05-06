@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import server.core.dto.UserDTO;
 import server.core.model.User;
 import server.core.repository.UserRepository;
+import server.mapper.Mapper;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -15,11 +16,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void addUser(UserDTO userDTO) {
-        userRepository.save(new ModelMapper().map(userDTO, User.class));
+        userRepository.save(Mapper.map(userDTO, User.class));
     }
 
     @Override
     public UserDTO getUser(String userId) {
-        return new ModelMapper().map(userRepository.findById(userId).get(), UserDTO.class);
+        return Mapper.map(userRepository.findById(userId).get(), UserDTO.class);
     }
 }

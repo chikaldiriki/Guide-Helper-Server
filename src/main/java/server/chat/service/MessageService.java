@@ -7,10 +7,10 @@ import org.springframework.stereotype.Service;
 import server.chat.dto.MessageDTO;
 import server.chat.model.Message;
 import server.chat.repository.MessageRepository;
+import server.mapper.Mapper;
 import server.specifications.GenericSpecification;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class MessageService {
@@ -18,21 +18,15 @@ public class MessageService {
     @Autowired
     MessageRepository messageRepository;
 
-    private List<MessageDTO> messageToDTO(List<Message> messages) {
-        return messages.stream()
-                .map(message -> new ModelMapper().map(message, MessageDTO.class))
-                .collect(Collectors.toList());
-    }
-
     public MessageDTO save(Message messageDTO) {
         Message message = new ModelMapper().map(messageDTO, Message.class);
         Message savedMessage = messageRepository.save(message);
-        return new ModelMapper().map(savedMessage, MessageDTO.class);
+        return Mapper.map(savedMessage, MessageDTO.class);
     }
 
     public List<MessageDTO> findChatMessages(int chatId) {
         GenericSpecification<Message> spec = new GenericSpecification<>("chatId", "eq", chatId);
-        return messageToDTO(messageRepository.findAll(spec, Sort.by(Sort.Direction.ASC, "dispatchTime")));
+        return Mapper.mapList(messageRepository.findAll(spec, Sort.by(Sort.Direction.ASC, "dispatchTime")), MessageDTO.class);
     }
 
     public void updateStatus(String chatId) {

@@ -1,6 +1,5 @@
 package server.chat.controller;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,6 +11,7 @@ import server.chat.model.Keyword;
 import server.chat.model.Message;
 import server.chat.service.ChatService;
 import server.chat.service.MessageService;
+import server.mapper.Mapper;
 
 import java.util.List;
 
@@ -26,7 +26,7 @@ public class ChatController {
 
     @GetMapping
     public void processMessage(@RequestBody MessageDTO messageDTO) {
-        Message message = new ModelMapper().map(messageDTO, Message.class);
+        Message message = Mapper.map(messageDTO, Message.class);
         int chatId = chatService
                 .getChatId(message.getSenderMail(), message.getReceiverMail());
         messageService.save(message.setChatId(chatId));
