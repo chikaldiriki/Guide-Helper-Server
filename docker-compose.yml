@@ -3,17 +3,30 @@ version: "3.6"
 services:
 
   database:
-    
-    build: ./src/main/sql/.
-    
-    command: mysql -uroot -pchikaldiriki.Password42
-  
-  server:
-  
-    build: .
-  
-    command: java -jar build/libs/GuideHelperServer-1.0-SNAPSHOT.jar
-    
+    build: ./src/main/database/
+    #image: guide-helper-db
+    restart: always
+    environment:
+      MYSQL_ROOT_USER: root
+      MYSQL_ROOT_PASSWORD: chikaldiriki.Password42
+      MYSQL_DATABASE: GuideHelperDB
+    networks:
+      - employee-mysql  
     ports:
-        - 8080:8080
+      - 3307:3306
 
+  server:
+    build: .
+    restart: on-failure
+    #image: server
+    depends_on:
+      - database
+    links: 
+      - database  
+    networks:
+      - employee-mysql  
+    ports:
+      - 8080:8080
+      
+networks:
+  employee-mysql:              
