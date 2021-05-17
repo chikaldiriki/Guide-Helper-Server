@@ -11,3 +11,6 @@ Spring boot server using MySQL database
 ## Run
 -   `docker compose build`
 -   `docker compose up -d`
+
+## API
+-   [link](http://localhost:8080/swagger-ui.html)
