@@ -25,11 +25,19 @@ public class ChatService {
 
     @Nullable
     private Chat getChatByUsers(String firstUserMail, String secondUserMail) {
-        GenericSpecification<Chat> specFirstUser =
+        GenericSpecification<Chat> specFirstUserAsFirst =
                 new GenericSpecification<>("firstUserMail", "eq", firstUserMail);
-        GenericSpecification<Chat> specSecondUser =
+        GenericSpecification<Chat> specSecondUserAsSecond =
                 new GenericSpecification<>("secondUserMail", "eq", secondUserMail);
-        List<Chat> chats = chatRepository.findAll(Specification.where(specFirstUser).and(specSecondUser));
+
+        GenericSpecification<Chat> specFirstUserAsSecond =
+                new GenericSpecification<>("secondUserMail", "eq", firstUserMail);
+        GenericSpecification<Chat> specSecondUserAsFirst =
+                new GenericSpecification<>("firstUserMail", "eq", secondUserMail);
+
+        List<Chat> chats = chatRepository.findAll(Specification.where(specFirstUserAsFirst).and(specSecondUserAsSecond));
+        chats.addAll(chatRepository.findAll(Specification.where(specFirstUserAsSecond).and(specSecondUserAsFirst)));
+
         if (chats.isEmpty()) {
             return null;
         }
@@ -45,11 +53,11 @@ public class ChatService {
         return chat.getId();
     }
 
-    public List<ChatDTO> getDialogs(String userId) {
+    public List<ChatDTO> getDialogs(String userMail) {
         GenericSpecification<Chat> specFirstUser =
-                new GenericSpecification<>("firstUserMail", "eq", userId);
+                new GenericSpecification<>("firstUserMail", "eq", userMail);
         GenericSpecification<Chat> specSecondUser =
-                new GenericSpecification<>("secondUserMail", "eq", userId);
+                new GenericSpecification<>("secondUserMail", "eq", userMail);
 
         return Mapper.mapList(chatRepository.findAll(Specification.where(specFirstUser).or(specSecondUser)), ChatDTO.class);
     }
