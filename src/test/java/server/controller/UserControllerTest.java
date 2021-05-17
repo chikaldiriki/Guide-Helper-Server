@@ -14,7 +14,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import server.core.dto.UserDTO;
 import server.core.model.User;
-import server.core.service.UserServiceImpl;
+import server.core.service.UserService;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
@@ -27,7 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 public class UserControllerTest {
     @MockBean
-    UserServiceImpl userService;
+    UserService userService;
 
     @Autowired
     MockMvc mockMvc;

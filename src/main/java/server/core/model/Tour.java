@@ -6,10 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @AllArgsConstructor
@@ -22,7 +19,8 @@ public class Tour {
 
     @Id
     @Column (name = "tour_id")
-    private int id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
     @Column (name = "title")
     private String title;
@@ -34,7 +32,7 @@ public class Tour {
     private String guide;
 
     @Column (name = "cost")
-    private int cost;
+    private Long cost;
 
     @Column (name = "description")
     private String description;

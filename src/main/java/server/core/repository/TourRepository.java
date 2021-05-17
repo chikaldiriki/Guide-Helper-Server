@@ -7,6 +7,6 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface TourRepository extends JpaRepository<Tour, Integer>, JpaSpecificationExecutor<Tour> {
+public interface TourRepository extends JpaRepository<Tour, Long>, JpaSpecificationExecutor<Tour> {
 
 }

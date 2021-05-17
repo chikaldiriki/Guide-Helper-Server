@@ -15,9 +15,14 @@ public class TourController {
     @Autowired
     private TourService tourService;
 
-    @GetMapping("")
+    @GetMapping("/all")
     public List<TourDTO> getAllTours() {
         return tourService.getAllTours();
+    }
+
+    @GetMapping("/id={tourId}")
+    public TourDTO getTour(@PathVariable Long tourId) {
+        return tourService.getTour(tourId);
     }
 
     @GetMapping("/{city}")
@@ -32,6 +37,11 @@ public class TourController {
     @GetMapping("/{userId}/coming")
     public List<TourDTO> getComingUserTours(@PathVariable String userId) {
         return tourService.getComingTours(userId);
+    }
+
+    @GetMapping("/{guideId}")
+    public List<TourDTO> getToursByGuide(@PathVariable String guideId) {
+        return tourService.getToursByGuide(guideId);
     }
 
     @GetMapping("/{guideId}/coming")
@@ -50,12 +60,12 @@ public class TourController {
     }
 
     @PutMapping("/{tourId}")
-    public String updateTour(@PathVariable Long tourId) {
-        return null;
+    public void updateTour(@RequestBody TourDTO newTour, @PathVariable Long tourId) {
+        tourService.updateTour(newTour, tourId);
     }
 
     @DeleteMapping("/{tourId}")
-    public void deleteTour(@PathVariable Integer tourId) {
+    public void deleteTour(@PathVariable Long tourId) {
         tourService.deleteTour(tourId);
     }
 }

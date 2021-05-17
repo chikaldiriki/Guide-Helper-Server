@@ -13,7 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import server.core.dto.UserDTO;
 import server.core.model.User;
 import server.core.repository.UserRepository;
-import server.core.service.UserServiceImpl;
+import server.core.service.UserService;
 
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -26,7 +26,7 @@ public class UserServiceImplTest {
     private UserRepository userRepo;
 
     @InjectMocks
-    private UserServiceImpl userService;
+    private UserService userService;
 
     private User user;
 

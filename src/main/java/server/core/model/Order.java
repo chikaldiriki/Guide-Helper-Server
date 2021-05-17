@@ -6,10 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.sql.Date;
 
 @Entity
@@ -23,6 +20,7 @@ public class Order {
 
     @Id
     @Column (name = "order_id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
     @Column (name = "user_mail")
