@@ -10,38 +10,49 @@ repositories {
     mavenCentral()
 }
 
-task fatJar(type: Jar) {
-    manifest {
-        attributes 'Implementation-Title': 'Server',
-                'Main-Class': 'server.Application'
-    }
-    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
-    with jar
-}
-
 dependencies {
-    implementation 'junit:junit:4.12'
-    implementation 'junit:junit:4.12'
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
-    testImplementation(platform("org.junit:junit-bom:5.7.0"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
-    testImplementation("com.google.guava:guava:19.0")
+    implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-security'
-    implementation 'org.springframework.security:spring-security-test'
+
+    /*implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.security:spring-security-test'*/
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+    // PYTHON SERVER ACCESS
+    implementation 'com.squareup.okhttp3:okhttp:4.9.0'
+    implementation 'org.json:json:20171018'
+
+    // JUNIT TESTING
+    implementation 'junit:junit:4.12'
+
+    // MYSQL
     runtimeOnly 'mysql:mysql-connector-java'
+
+    // MODEL MAPPING
     implementation 'org.modelmapper:modelmapper:2.3.0'
 
+    implementation 'org.projectlombok:lombok'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
 
     testCompileOnly 'org.projectlombok:lombok'
     testAnnotationProcessor 'org.projectlombok:lombok'
+
+    // MOCK TESTING
+    testImplementation "org.mockito:mockito-core:1.+"
+
+    // TEST
+    testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    // COMPILATION IN DOCKER COMPOSE
+    implementation 'com.google.code.findbugs:jsr305:3.0.2'
+
+    // SWAGGER
+    implementation "io.springfox:springfox-swagger2:2.7.0"
+    implementation "io.springfox:springfox-swagger-ui:2.7.0"
 }
 
 test {
