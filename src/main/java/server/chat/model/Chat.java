@@ -33,4 +33,7 @@ public class Chat {
     @Column (name = "uptodate")
     private boolean upToDate;
 
+    @Column (name = "number_of_messages")
+    private int numberOfMessages;
+
 }

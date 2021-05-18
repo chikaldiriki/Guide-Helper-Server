@@ -20,14 +20,14 @@ public class Order {
 
     @Id
     @Column (name = "order_id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column (name = "user_mail")
     private String customerMail;
 
     @Column (name = "tour_id")
-    private int tourId;
+    private Long tourId;
 
     @Column (name = "date_time")
     private Date tourTime;

@@ -2,6 +2,7 @@ package server.core.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import server.core.dto.OrderDTO;
 import server.core.dto.TourDTO;
@@ -10,6 +11,8 @@ import server.core.repository.TourRepository;
 import server.mapper.Mapper;
 import server.specifications.GenericSpecification;
 
+import java.sql.Date;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,6 +24,9 @@ public class TourService {
 
     @Autowired
     private OrderService orderService;
+
+    @Autowired
+    private FavoriteTourService favoriteTourService;
 
     public TourDTO getTour(Long tourId) {
         return Mapper.map(tourRepository.findById(tourId).get(), TourDTO.class);
@@ -40,16 +46,19 @@ public class TourService {
         return Mapper.mapList(tourRepository.findAll(spec, Sort.by(Sort.Direction.ASC, parameter)), TourDTO.class);
     }
 
-    public List<TourDTO> getComingTours(String userId) { // TODO
-        List<Integer> tourIds = orderService.getOrdersByUser(userId).stream()
+    public List<TourDTO> getComingTours(String userId, Date currentDate) {
+        List<Long> tourIds = orderService.getComingOrders(userId, currentDate).stream()
                 .map(OrderDTO::getTourId)
                 .collect(Collectors.toList());
-        GenericSpecification<Tour> spec = new GenericSpecification<>("id", "in", tourIds);
+        if (tourIds.isEmpty()) {
+            return Collections.emptyList();
+        }
+
+        Specification<Tour> spec = new GenericSpecification<>("id", "eq", tourIds.get(0));
+        for (int i = 1; i < tourIds.size(); i++) {
+            spec = Specification.where(spec).or(new GenericSpecification<>("id", "eq", tourIds.get(i)));
+        }
         return Mapper.mapList(tourRepository.findAll(spec), TourDTO.class);
-        /*return orderService.getOrdersByUser(userId)
-                .stream()
-                .flatMap(orderDTO -> getAllTours().stream().filter(tourDTO -> orderDTO.getTourId() == tourDTO.getId()))
-                .collect(Collectors.toList());*/
     }
 
     public List<TourDTO> getToursByGuide(String guideId) {
@@ -57,9 +66,9 @@ public class TourService {
         return Mapper.mapList(tourRepository.findAll(spec), TourDTO.class);
     }
 
-    public List<TourDTO> getFavoriteTours(Long userId) {
-        //TODO
-        return null;
+    public List<TourDTO> getFavoriteTours(String userMail) {
+        List<Tour> favoriteTours = tourRepository.findAllById(favoriteTourService.getToursIdsByUser(userMail));
+        return Mapper.mapList(favoriteTours, TourDTO.class);
     }
 
     public void addTour(TourDTO tourDTO) {

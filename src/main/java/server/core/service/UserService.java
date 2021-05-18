@@ -1,6 +1,5 @@
 package server.core.service;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import server.core.dto.UserDTO;
@@ -42,7 +41,7 @@ public class UserService {
         userRepository.deleteById(userId);
     }
 
-    public void createGuide(String userId) {
+    public void setGuideStatus(String userId) {
         UserDTO user = getUser(userId);
         user.setGuide(true);
         updateUser(user, userId);

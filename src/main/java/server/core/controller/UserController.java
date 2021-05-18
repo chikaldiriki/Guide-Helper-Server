@@ -29,11 +29,11 @@ public class UserController {
     }
 
     @PutMapping("/guide_creation/{userId}")
-    public void createGuide(@PathVariable String userId) {
-        userService.createGuide(userId);
+    public void setGuideStatus(@PathVariable String userId) {
+        userService.setGuideStatus(userId);
     }
 
-    @DeleteMapping("/{userId}")
+    @DeleteMapping("/delete/user_mail={userId}")
     public void deleteUser(@PathVariable String userId) {
         userService.deleteUser(userId);
     }

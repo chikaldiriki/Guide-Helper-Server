@@ -14,19 +14,18 @@ import javax.persistence.*;
 @Setter
 @Getter
 @Accessors(chain = true)
-@Table(name = "Tags")
-public class Tag {
+@Table(name = "Favorites")
+public class FavoriteTour {
 
     @Id
-    @Column (name = "tag_id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    @Column (name = "favorite_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @Column (name = "user_mail")
-    private String tagHolderMail;
+    @Column (name = "user_id")
+    private String userMail;
 
-    @Column (name = "tag")
-    private String tagText;
-
+    @Column (name = "tour_id")
+    private Long tourId;
 
 }

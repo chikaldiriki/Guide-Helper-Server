@@ -29,7 +29,7 @@ CREATE TABLE `GuideHelperDB`.`Tours` (
     REFERENCES `GuideHelperDB`.`Users` (`user_mail`)
     ON DELETE CASCADE
     ON UPDATE CASCADE);
-  
+
 CREATE TABLE `GuideHelperDB`.`Orders` (
   `order_id` INT NOT NULL AUTO_INCREMENT,
   `user_mail` VARCHAR(320) NOT NULL,
@@ -48,36 +48,31 @@ CREATE TABLE `GuideHelperDB`.`Orders` (
     REFERENCES `GuideHelperDB`.`Tours` (`tour_id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE);
-  
-CREATE TABLE `GuideHelperDB`.`Subscriptions` (
-  `subscription_id` INT NOT NULL AUTO_INCREMENT,
-  `user_mail` VARCHAR(320) NULL,
-  `guide_mail` VARCHAR(320) NULL,
-  PRIMARY KEY (`subscription_id`),
-  INDEX `user_mail_idx` (`user_mail` ASC) VISIBLE,
-  CONSTRAINT `fk_user_mail_subs`
-    FOREIGN KEY (`user_mail`)
+
+CREATE TABLE `GuideHelperDB`.`Favorites` (
+  `favorite_id` INT NOT NULL AUTO_INCREMENT,
+  `user_id` VARCHAR(320) NOT NULL,
+  `tour_id` INT NOT NULL,
+  PRIMARY KEY (`favorite_id`),
+  INDEX `fk_user_id_idx` (`user_id` ASC) VISIBLE,
+  INDEX `fk_tour_id_idx` (`tour_id` ASC) VISIBLE,
+  CONSTRAINT `fk_user_id`
+    FOREIGN KEY (`user_id`)
     REFERENCES `GuideHelperDB`.`Users` (`user_mail`)
     ON DELETE CASCADE
-    ON UPDATE CASCADE);
-  
-CREATE TABLE `GuideHelperDB`.`Tags` (
-  `tag_id` INT NOT NULL AUTO_INCREMENT,
-  `user_mail` VARCHAR(350) NOT NULL,
-  `tag` TINYTEXT NOT NULL,
-  PRIMARY KEY (`tag_id`),
-  INDEX `user_mail_idx` (`user_mail` ASC) VISIBLE,
-  CONSTRAINT `fk_user_mail_tags`
-    FOREIGN KEY (`user_mail`)
-    REFERENCES `GuideHelperDB`.`Users` (`user_mail`)
+    ON UPDATE CASCADE,
+  CONSTRAINT `fk_tour_id`
+    FOREIGN KEY (`tour_id`)
+    REFERENCES `GuideHelperDB`.`Tours` (`tour_id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE);
-    
+
 CREATE TABLE `GuideHelperDB`.`Chats` (
   `chat_id` INT NOT NULL AUTO_INCREMENT,
   `first_user_mail` VARCHAR(320) NOT NULL,
   `second_user_mail` VARCHAR(320) NOT NULL,
   `uptodate` TINYINT(1) NOT NULL DEFAULT 0,
+  `number_of_messages` INT NOT NULL DEFAULT 0,
   PRIMARY KEY (`chat_id`),
   INDEX `first_user_idx` (`first_user_mail` ASC) VISIBLE,
   INDEX `second_user_idx` (`second_user_mail` ASC) VISIBLE,
@@ -91,37 +86,9 @@ CREATE TABLE `GuideHelperDB`.`Chats` (
     REFERENCES `GuideHelperDB`.`Users` (`user_mail`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
- 
-CREATE TABLE `GuideHelperDB`.`Messages` (
-  `message_id` INT NOT NULL AUTO_INCREMENT,
-  `chat_id` INT NOT NULL,
-  `sender_mail` VARCHAR(320) NOT NULL,
-  `receiver_mail` VARCHAR(320) NOT NULL,
-  `text` TEXT NOT NULL,
-  `dispatch_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `status` TINYINT(1) NOT NULL DEFAULT 0,
-  PRIMARY KEY (`message_id`),
-  INDEX `chat_id_idx` (`chat_id` ASC) VISIBLE,
-  INDEX `sender_idx` (`sender_mail` ASC) VISIBLE,
-  INDEX `receiver_idx` (`receiver_mail` ASC) VISIBLE,
-  CONSTRAINT `chat_id`
-    FOREIGN KEY (`chat_id`)
-    REFERENCES `GuideHelperDB`.`Chats` (`chat_id`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE,
-  CONSTRAINT `sender`
-    FOREIGN KEY (`sender_mail`)
-    REFERENCES `GuideHelperDB`.`Users` (`user_mail`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE,
-  CONSTRAINT `receiver`
-    FOREIGN KEY (`receiver_mail`)
-    REFERENCES `GuideHelperDB`.`Users` (`user_mail`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE);
-    
+
 CREATE TABLE `GuideHelperDB`.`Keywords` (
-  `keyword_id` INT NOT NULL,
+  `keyword_id` INT NOT NULL AUTO_INCREMENT,
   `chat_id` INT NOT NULL,
   `word` TINYTEXT NOT NULL,
   PRIMARY KEY (`keyword_id`),
@@ -131,11 +98,15 @@ CREATE TABLE `GuideHelperDB`.`Keywords` (
     REFERENCES `GuideHelperDB`.`Chats` (`chat_id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE);
-  
+
 INSERT INTO `GuideHelperDB`.`Users`
  (`user_mail`, `is_guide`, `first_name`, `last_name`, `phone_number`, `city`, `description`)
  VALUES ('firstUser@gmail.com', '0', 'Tester', 'Testov', '+7-977-777-77-77', 'Spb', 'Test Query 1');
- 
+
+INSERT INTO `GuideHelperDB`.`Users`
+(`user_mail`, `is_guide`, `first_name`, `last_name`, `phone_number`, `city`, `description`)
+VALUES ('thdUser@gmail.com', '2', 'Kek', 'Petrov', '+7-977-777-77-77', 'Spb', 'Test Query 3');
+
 INSERT INTO `GuideHelperDB`.`Users`
  (`user_mail`, `is_guide`, `first_name`, `last_name`, `phone_number`, `city`, `description`)
  VALUES ('secondUser@gmail.com', '1', 'Kek', 'Kekov', '+7-977-777-77-77', 'Spb', 'Test Query 2');
@@ -144,5 +115,13 @@ INSERT INTO `GuideHelperDB`.`Tours`
  (`tour_id`, `title`, `city`, `guide_mail`, `cost`, `description`, `tour_image`)
  VALUES (1, 'test tour', 'saintpy', 'secondUser@gmail.com', 100, 'test description', null);
 
-  
+INSERT INTO `GuideHelperDB`.`Tours`
+ (`tour_id`, `title`, `city`, `guide_mail`, `cost`, `description`, `tour_image`)
+ VALUES (2, 'msk tour', 'msk', 'firstUser@gmail.com', 300, 'The extensive sightseeing tour of Moscow is the main tourist route not only for the guests of the city, but also for the residents of Moscow. A tour of Moscow - it can be called a perennial classics, because it allows to get acquainted with legendary sights and to create a holistic perception of the majestic capital. ', null);
+
+INSERT INTO `GuideHelperDB`.`Tours`
+(`tour_id`, `title`, `city`, guide_mail, cost, description, `tour_image`)
+VALUES (3, 'yar tour', 'sainyartpy', 'thdUser@gmail.com', 500, 'The ceremonial halls of the Winter Palace, the exhibits of the Old Hermitage and the New Hermitage - on excursion you will discover the treasury of one of the main museums of the world. You will find the collections of ancient and Egyptian halls, as well as immersion in the culture of Western Europe - we will break down the plot of the paintings, penetrate the mysteries of painting and talk about the creative path of artists', null);
+
+
 

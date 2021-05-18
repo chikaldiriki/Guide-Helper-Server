@@ -14,8 +14,8 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
-    @GetMapping("/{userId}")
-    public List<OrderDTO> getUserOrders(@PathVariable String userId) {
+    @GetMapping("/user_mail={userId}")
+    public List<OrderDTO> getOrdersByUser(@PathVariable String userId) {
         return orderService.getOrdersByUser(userId);
     }
 
@@ -26,10 +26,10 @@ public class OrderController {
 
     @PostMapping("")
     public void addOrder(OrderDTO orderDTO) {
-        addOrder(orderDTO);
+        orderService.addOrder(orderDTO);
     }
 
-    @DeleteMapping("")
+    @DeleteMapping("/delete")
     public void deleteOrder(OrderDTO orderDTO) {
         orderService.deleteOrder(orderDTO);
     }

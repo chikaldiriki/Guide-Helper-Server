@@ -5,6 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import server.core.service.TourService;
 
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Objects;
 
@@ -25,7 +28,7 @@ public class TourController {
         return tourService.getTour(tourId);
     }
 
-    @GetMapping("/{city}")
+    @GetMapping("/city={city}")
     public List<TourDTO> getToursByCitySortedByOptionalParameter(@PathVariable String city,
                                                                  @RequestParam(required = false) String sorted) {
         if (Objects.equals(sorted, null)) {
@@ -34,24 +37,24 @@ public class TourController {
         return tourService.getToursByCitySortedByParameter(city, sorted);
     }
 
-    @GetMapping("/{userId}/coming")
-    public List<TourDTO> getComingUserTours(@PathVariable String userId) {
-        return tourService.getComingTours(userId);
+    @GetMapping("/coming/user_id={userId}/cur_date={currentDate}")
+    public List<TourDTO> getComingUserTours(@PathVariable String userId, @PathVariable String currentDate) {
+        try {
+            return tourService.getComingTours(userId,
+                    new Date(new SimpleDateFormat("dd-MM-yyyy_HH:mm:ss").parse(currentDate).getTime()));
+        } catch (ParseException ex) {
+            throw new IllegalArgumentException(ex);
+        }
     }
 
-    @GetMapping("/{guideId}")
+    @GetMapping("/guide={guideId}")
     public List<TourDTO> getToursByGuide(@PathVariable String guideId) {
         return tourService.getToursByGuide(guideId);
     }
 
-    @GetMapping("/{guideId}/coming")
-    public List<TourDTO> getComingGuideTours(@PathVariable String guideId) {
-        return null;
-    }
-
-    @GetMapping("/{userId}/favorites")
-    public List<TourDTO> getFavoriteTours(@PathVariable String userId) {
-        return null;
+    @GetMapping("/favorites/{userMail}")
+    public List<TourDTO> getFavoriteTours(@PathVariable String userMail) {
+        return tourService.getFavoriteTours(userMail);
     }
 
     @PostMapping("")

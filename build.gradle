@@ -20,6 +20,10 @@ dependencies {
     implementation 'org.springframework.security:spring-security-test'*/
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
+    // PYTHON SERVER ACCESS
+    implementation 'com.squareup.okhttp3:okhttp:4.9.0'
+    implementation 'org.json:json:20171018'
+
     // JUNIT TESTING
     implementation 'junit:junit:4.12'
 
