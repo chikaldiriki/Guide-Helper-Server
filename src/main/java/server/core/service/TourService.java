@@ -11,7 +11,8 @@ import server.core.repository.TourRepository;
 import server.mapper.Mapper;
 import server.specifications.GenericSpecification;
 
-import java.sql.Date;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -46,7 +47,7 @@ public class TourService {
         return Mapper.mapList(tourRepository.findAll(spec, Sort.by(Sort.Direction.ASC, parameter)), TourDTO.class);
     }
 
-    public List<TourDTO> getComingTours(String userId, Date currentDate) {
+    public List<TourDTO> getComingTours(String userId, LocalDateTime currentDate) {
         List<Long> tourIds = orderService.getComingOrders(userId, currentDate).stream()
                 .map(OrderDTO::getTourId)
                 .collect(Collectors.toList());

@@ -1,13 +1,14 @@
 package server.core.controller;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import server.core.dto.TourDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import server.core.service.TourService;
 
-import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -37,14 +38,11 @@ public class TourController {
         return tourService.getToursByCitySortedByParameter(city, sorted);
     }
 
-    @GetMapping("/coming/user_id={userId}/cur_date={currentDate}")
-    public List<TourDTO> getComingUserTours(@PathVariable String userId, @PathVariable String currentDate) {
-        try {
-            return tourService.getComingTours(userId,
-                    new Date(new SimpleDateFormat("dd-MM-yyyy_HH:mm:ss").parse(currentDate).getTime()));
-        } catch (ParseException ex) {
-            throw new IllegalArgumentException(ex);
-        }
+    @GetMapping("/coming/user_mail={userMail}/time")
+    public List<TourDTO> getComingUserTours(@PathVariable String userMail,
+                                            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+                                                    LocalDateTime date) {
+        return tourService.getComingTours(userMail, date);
     }
 
     @GetMapping("/guide={guideId}")

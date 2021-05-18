@@ -1,5 +1,6 @@
 package server.specifications;
 
+import org.jetbrains.annotations.NotNull;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -27,8 +28,9 @@ public class GenericSpecification<T> implements Specification<T> {
 
 
     @Override
-    public Predicate toPredicate(Root<T> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
-        List<Object> arguments = searchCriteria.getArguments();
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public Predicate toPredicate(@NotNull Root<T> root, @NotNull CriteriaQuery<?> query, @NotNull CriteriaBuilder criteriaBuilder) {
+        List<?> arguments = searchCriteria.getArguments();
 
         if (arguments.isEmpty()) {
             throw new IllegalStateException("Arguments list is empty");
@@ -44,16 +46,16 @@ public class GenericSpecification<T> implements Specification<T> {
                 return criteriaBuilder.notEqual(root.get(searchCriteria.getKey()), arg);
 
             case GREATER_THAN:
-                return criteriaBuilder.greaterThan(root.get(searchCriteria.getKey()), arg.toString()); //(Comparable)
+                return criteriaBuilder.greaterThan(root.get(searchCriteria.getKey()), (Comparable) arg); //(Comparable)
 
             case GREATER_THAN_OR_EQUAL_TO:
-                return criteriaBuilder.greaterThanOrEqualTo(root.get(searchCriteria.getKey()), arg.toString());
+                return criteriaBuilder.greaterThanOrEqualTo(root.get(searchCriteria.getKey()), (Comparable) arg);
 
             case LESS_THAN:
-                return criteriaBuilder.lessThan(root.get(searchCriteria.getKey()), arg.toString());
+                return criteriaBuilder.lessThan(root.get(searchCriteria.getKey()), (Comparable) arg);
 
             case LESS_THAN_OR_EQUAL_TO:
-                return criteriaBuilder.lessThanOrEqualTo(root.get(searchCriteria.getKey()), arg.toString());
+                return criteriaBuilder.lessThanOrEqualTo(root.get(searchCriteria.getKey()), (Comparable) arg);
 
             case IN:
                 return root.get(searchCriteria.getKey()).in(arguments);
@@ -62,8 +64,7 @@ public class GenericSpecification<T> implements Specification<T> {
                 return root.get(searchCriteria.getKey()).in(arguments).not();
 
             case BETWEEN:
-                return criteriaBuilder.
-                        between(root.get(searchCriteria.getKey()), arg.toString(), arguments.get(1).toString());
+                return criteriaBuilder.between(root.get(searchCriteria.getKey()), (Comparable) arg, (Comparable)arguments.get(1));
 
             case CONTAINS:
                 return criteriaBuilder.like(root.get(searchCriteria.getKey()), "%" + arg + "%");

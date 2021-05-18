@@ -123,5 +123,7 @@ INSERT INTO `GuideHelperDB`.`Tours`
 (`tour_id`, `title`, `city`, guide_mail, cost, description, `tour_image`)
 VALUES (3, 'yar tour', 'sainyartpy', 'thdUser@gmail.com', 500, 'The ceremonial halls of the Winter Palace, the exhibits of the Old Hermitage and the New Hermitage - on excursion you will discover the treasury of one of the main museums of the world. You will find the collections of ancient and Egyptian halls, as well as immersion in the culture of Western Europe - we will break down the plot of the paintings, penetrate the mysteries of painting and talk about the creative path of artists', null);
 
+INSERT INTO GuideHelperDB.Orders (order_id, user_mail, tour_id, date_time) VALUES (1, 'firstUser@gmail.com', 1, '2021-05-01 15:00:00.0');
 
+INSERT INTO GuideHelperDB.Orders (order_id, user_mail, tour_id, date_time) VALUES (2, 'firstUser@gmail.com', 1, '2015-05-01 15:00:00.0');
 

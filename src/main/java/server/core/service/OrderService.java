@@ -10,7 +10,7 @@ import server.core.repository.OrderRepository;
 import server.mapper.Mapper;
 import server.specifications.GenericSpecification;
 
-import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -28,7 +28,7 @@ public class OrderService {
         return Mapper.mapList(orderRepository.findAll(spec, Sort.by(Sort.Direction.ASC, "tourTime")), OrderDTO.class);
     }
 
-    public List<OrderDTO> getComingOrders(String userId, Date currentDate) {
+    public List<OrderDTO> getComingOrders(String userId, LocalDateTime currentDate) {
         GenericSpecification<Order> userSpec = new GenericSpecification<>("customerMail", "eq", userId);
         GenericSpecification<Order> dateSpec = new GenericSpecification<>("tourTime", "gt", currentDate);
         return Mapper.mapList(orderRepository.findAll(Specification.where(userSpec).and(dateSpec)), OrderDTO.class);

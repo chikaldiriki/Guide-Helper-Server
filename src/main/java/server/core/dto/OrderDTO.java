@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
-import java.sql.Date;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -12,5 +12,5 @@ import java.sql.Date;
 public class OrderDTO {
     private String customerMail;
     private Long tourId;
-    private Date tourTime;
+    private LocalDateTime tourTime;
 }

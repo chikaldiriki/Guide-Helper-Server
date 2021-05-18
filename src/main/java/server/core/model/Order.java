@@ -7,7 +7,7 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @AllArgsConstructor
@@ -30,7 +30,7 @@ public class Order {
     private Long tourId;
 
     @Column (name = "date_time")
-    private Date tourTime;
+    private LocalDateTime tourTime;
 
 
 }
