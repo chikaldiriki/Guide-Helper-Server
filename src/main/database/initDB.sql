@@ -7,11 +7,11 @@ USE `GuideHelperDB`;
 CREATE TABLE `GuideHelperDB`.`Users` (
   `user_mail` VARCHAR(320) NOT NULL,
   `is_guide` BOOLEAN NOT NULL DEFAULT 0,
-  `first_name` TINYTEXT NULL,
-  `last_name` TINYTEXT NULL,
+  `name` TINYTEXT NULL,
   `phone_number` VARCHAR(30) NULL,
   `city` TINYTEXT NULL,
   `description` TEXT NULL,
+  `avatar_url` VARCHAR(1024) NULL,
   PRIMARY KEY (`user_mail`));
 
 CREATE TABLE `GuideHelperDB`.`Tours` (
@@ -100,16 +100,16 @@ CREATE TABLE `GuideHelperDB`.`Keywords` (
     ON UPDATE CASCADE);
 
 INSERT INTO `GuideHelperDB`.`Users`
- (`user_mail`, `is_guide`, `first_name`, `last_name`, `phone_number`, `city`, `description`)
- VALUES ('firstUser@gmail.com', '0', 'Tester', 'Testov', '+7-977-777-77-77', 'Spb', 'Test Query 1');
+ (`user_mail`, `is_guide`, `name`, `phone_number`, `city`, `description`, `avatar_url`)
+ VALUES ('firstUser@gmail.com', '0', 'Tester', '+7-977-777-77-77', 'Spb', 'Test Query 1', null);
 
 INSERT INTO `GuideHelperDB`.`Users`
-(`user_mail`, `is_guide`, `first_name`, `last_name`, `phone_number`, `city`, `description`)
-VALUES ('thdUser@gmail.com', '2', 'Kek', 'Petrov', '+7-977-777-77-77', 'Spb', 'Test Query 3');
+(`user_mail`, `is_guide`, `name`, `phone_number`, `city`, `description`, `avatar_url`)
+VALUES ('thdUser@gmail.com', '2', 'Petrov', '+7-977-777-77-77', 'Spb', 'Test Query 3', null);
 
 INSERT INTO `GuideHelperDB`.`Users`
- (`user_mail`, `is_guide`, `first_name`, `last_name`, `phone_number`, `city`, `description`)
- VALUES ('secondUser@gmail.com', '1', 'Kek', 'Kekov', '+7-977-777-77-77', 'Spb', 'Test Query 2');
+ (`user_mail`, `is_guide`, `name`, `phone_number`, `city`, `description`, `avatar_url`)
+ VALUES ('secondUser@gmail.com', '1', 'Kek', '+7-977-777-77-77', 'Spb', 'Test Query 2', null);
 
 INSERT INTO `GuideHelperDB`.`Tours`
  (`tour_id`, `title`, `city`, `guide_mail`, `cost`, `description`, `tour_image`)
@@ -126,4 +126,5 @@ VALUES (3, 'yar tour', 'sainyartpy', 'thdUser@gmail.com', 500, 'The ceremonial h
 INSERT INTO GuideHelperDB.Orders (order_id, user_mail, tour_id, date_time) VALUES (1, 'firstUser@gmail.com', 1, '2021-05-01 15:00:00.0');
 
 INSERT INTO GuideHelperDB.Orders (order_id, user_mail, tour_id, date_time) VALUES (2, 'firstUser@gmail.com', 1, '2015-05-01 15:00:00.0');
+
 

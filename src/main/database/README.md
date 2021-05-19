@@ -6,3 +6,5 @@ How to run database in docker
  sudo docker start app-db
  sudo docker exec -it app-db /bin/bash
 ```
+
+Use ```restartDB.sh``` script from database directory to restart database. Remember to change Dockerfile before running this script. 
