@@ -27,11 +27,8 @@ public class User {
     @Column(name = "is_guide")
     private boolean isGuide;
 
-    @Column(name = "first_name")
-    private String firstName;
-
-    @Column(name = "last_name")
-    private String lastName;
+    @Column(name = "name")
+    private String name;
 
     @Column(name = "phone_number")
     private String phoneNumber;
@@ -42,13 +39,15 @@ public class User {
     @Column(name = "description")
     private String description;
 
+    @Column(name = "avatar_url")
+    private String avatarUrl;
+
     @Override
     public String toString() {
         return "User{" +
                 "user_mail=" + userMail +
                 ", is_guide=" + isGuide +
-                ", first_name=" + firstName +
-                ", last_name=" + lastName +
+                ", name=" + name +
                 ", phone_number=" + phoneNumber +
                 ", city=" + city +
                 ", description=" + description +

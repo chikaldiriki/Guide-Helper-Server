@@ -20,10 +20,7 @@ public class UserDTO {
     private boolean isGuide;
 
     @Schema(description = "Имя пользователя")
-    private String firstName;
-
-    @Schema(description = "Имя пользователя")
-    private String lastName;
+    private String name;
 
     @Schema(description = "Номер телефона")
     private String phoneNumber;
@@ -33,17 +30,7 @@ public class UserDTO {
 
     @Schema(description = "Описание пользователя о себе")
     private String description;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        UserDTO userDTO = (UserDTO) o;
-        return isGuide == userDTO.isGuide && Objects.equals(userMail, userDTO.userMail) && Objects.equals(firstName, userDTO.firstName) && Objects.equals(lastName, userDTO.lastName) && Objects.equals(phoneNumber, userDTO.phoneNumber) && Objects.equals(city, userDTO.city) && Objects.equals(description, userDTO.description);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(userMail, isGuide, firstName, lastName, phoneNumber, city, description);
-    }
+  
+    @Schema(description = "Url аватара пользователя из гугл почты"
+    private String avatarUrl;
 }

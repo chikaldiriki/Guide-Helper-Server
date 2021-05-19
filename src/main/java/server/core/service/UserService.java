@@ -24,11 +24,11 @@ public class UserService {
     public void updateUser(UserDTO newUser, String userId) {
         userRepository.findById(userId).map(user -> {
             user.setGuide(newUser.isGuide());
-            user.setFirstName(newUser.getFirstName());
-            user.setLastName(newUser.getLastName());
+            user.setName(newUser.getName());
             user.setPhoneNumber(newUser.getPhoneNumber());
             user.setCity(newUser.getCity());
             user.setDescription(newUser.getDescription());
+            user.setAvatarUrl(newUser.getAvatarUrl());
             return userRepository.save(user);
         }).orElseGet(() ->  {
             User user = Mapper.map(newUser, User.class);
