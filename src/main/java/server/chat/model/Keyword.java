@@ -23,7 +23,7 @@ public class Keyword {
     private int id;
 
     @Column(name="chat_id")
-    private int chatId;
+    private long chatId;
 
     @Column(name="word")
     private String word;

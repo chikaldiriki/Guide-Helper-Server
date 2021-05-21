@@ -27,6 +27,9 @@ dependencies {
     // JUNIT TESTING
     implementation 'junit:junit:4.12'
 
+    // FIREBASE
+    implementation 'com.google.firebase:firebase-admin:6.11.0'
+
     // MYSQL
     runtimeOnly 'mysql:mysql-connector-java'
 

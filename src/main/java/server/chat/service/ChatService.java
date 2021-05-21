@@ -30,6 +30,9 @@ public class ChatService {
     @Autowired
     private KeywordRepository keywordRepository;
 
+    @Autowired
+    private MessagesService messagesService;
+
     @Nullable
     private Chat getChatByUsers(String firstUserMail, String secondUserMail) {
         GenericSpecification<Chat> specFirstUserToFirst =
@@ -50,7 +53,24 @@ public class ChatService {
         return chats.get(0);
     }
 
-    public int getChatId(String firstUserMail, String secondUserMail) {
+    public List<Chat> getAllUpToDateChats() {
+        GenericSpecification<Chat> spec = new GenericSpecification<>("upToDate", "eq", true);
+        return chatRepository.findAll(spec);
+    }
+
+    public void updateUpToDateFlags() {
+        List<Chat> chats = getAllUpToDateChats();
+
+        for (Chat chat : chats) {
+            long chatId = chat.getId();
+            if (chat.getNumberOfMessages() != messagesService.countMessagesByChatId(chatId)) {
+                chatRepository.updateUpToDate(chatId, false);
+                keywordRepository.deleteByChatId(chatId);
+            }
+        }
+    }
+
+    public long getChatId(String firstUserMail, String secondUserMail) {
         Chat chat = getChatByUsers(firstUserMail, secondUserMail);
         if (chat == null) {
             chat = new Chat().setFirstUserMail(firstUserMail).setSecondUserMail(secondUserMail);
@@ -69,15 +89,17 @@ public class ChatService {
     }
 
     public List<Keyword> getKeywords(String firstUserMail, String secondUserMail) {
-        /*Chat chat = getChatByUsers(firstUserMail, secondUserMail);
+        Chat chat = getChatByUsers(firstUserMail, secondUserMail);
         if (chat == null) {
             throw new IllegalArgumentException();
         }
 
-        if (chat.isUpToDate()) {
+        if (chat.getNumberOfMessages() == messagesService.countMessagesByChatId(chat.getId())) {
             GenericSpecification<Keyword> spec = new GenericSpecification<>("chatId", "eq", chat.getId());
             return keywordRepository.findAll(spec);
-        }*/
+        }
+
+        keywordRepository.deleteByChatId(chat.getId());
 
         OkHttpClient okHttpClient = new OkHttpClient();
         Request request = new Request.Builder().url("http://localhost:5000/keywords/en/chat_id=1").build();
@@ -95,13 +117,15 @@ public class ChatService {
                 JSONArray json = new JSONArray(Objects.requireNonNull(response.body()).string());
                 System.out.println(json);
                 for (int i = 0; i < json.length(); i++) {
-                    keywords.add(new Keyword(0, /*chat.getId()*/1 , json.getJSONArray(i).getString(0)));
+                    keywords.add(new Keyword(0, chat.getId(), json.getJSONArray(i).getString(0)));
                 }
             }
         });
 
         //TODO: fix this
         while (keywords.isEmpty()) {}
+
+        keywordRepository.saveAll(keywords);
 
         return keywords;
     }
