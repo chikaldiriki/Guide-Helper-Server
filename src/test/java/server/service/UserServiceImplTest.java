@@ -35,8 +35,7 @@ public class UserServiceImplTest {
         user = new User()
                 .setUserMail("johndoe@example.com")
                 .setCity("Moscow")
-                .setFirstName("John")
-                .setLastName("Doe")
+                .setName("John")
                 .setGuide(true)
                 .setDescription("I like discrete math...")
                 .setPhoneNumber("123456789");

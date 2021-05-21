@@ -56,4 +56,12 @@ public class MessagesService {
 
         return numberOfMessages;
     }
+
+    public String getChatText(long chatId) {
+        StringBuilder messages = new StringBuilder();
+
+        //TODO
+
+        return messages.toString();
+    }
 }

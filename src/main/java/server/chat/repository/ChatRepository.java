@@ -10,7 +10,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ChatRepository extends JpaRepository<Chat, Integer>, JpaSpecificationExecutor<Chat> {
+
     @Modifying
-    @Query("update Chat chat set chat.upToDate = :isUpToDate where chat.id = :id")
-    void updateUpToDate(@Param(value = "id") long id, @Param(value = "isUpToDate") boolean isUpToDate);
+    @Query("update Chat chat set chat.numberOfMessages = :numberOfMessages where chat.id = :id")
+    void updateNumberOfMessages(@Param(value = "id") long id, @Param(value = "numberOfMessages") int numberOfMessages);
 }

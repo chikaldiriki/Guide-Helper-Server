@@ -1,9 +1,7 @@
 package server.chat.service;
 
 import io.micrometer.core.lang.Nullable;
-import okhttp3.*;
-import org.jetbrains.annotations.NotNull;
-import org.json.JSONArray;
+import keywords.rake.Rake;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -15,10 +13,9 @@ import server.chat.repository.KeywordRepository;
 import server.mapper.Mapper;
 import server.specifications.GenericSpecification;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -32,6 +29,8 @@ public class ChatService {
 
     @Autowired
     private MessagesService messagesService;
+
+    private final Rake rake = new Rake();
 
     @Nullable
     private Chat getChatByUsers(String firstUserMail, String secondUserMail) {
@@ -53,23 +52,6 @@ public class ChatService {
         return chats.get(0);
     }
 
-    public List<Chat> getAllUpToDateChats() {
-        GenericSpecification<Chat> spec = new GenericSpecification<>("upToDate", "eq", true);
-        return chatRepository.findAll(spec);
-    }
-
-    public void updateUpToDateFlags() {
-        List<Chat> chats = getAllUpToDateChats();
-
-        for (Chat chat : chats) {
-            long chatId = chat.getId();
-            if (chat.getNumberOfMessages() != messagesService.countMessagesByChatId(chatId)) {
-                chatRepository.updateUpToDate(chatId, false);
-                keywordRepository.deleteByChatId(chatId);
-            }
-        }
-    }
-
     public long getChatId(String firstUserMail, String secondUserMail) {
         Chat chat = getChatByUsers(firstUserMail, secondUserMail);
         if (chat == null) {
@@ -89,41 +71,27 @@ public class ChatService {
     }
 
     public List<Keyword> getKeywords(String firstUserMail, String secondUserMail) {
+        //TODO: language detecting
         Chat chat = getChatByUsers(firstUserMail, secondUserMail);
         if (chat == null) {
             throw new IllegalArgumentException();
         }
 
-        if (chat.getNumberOfMessages() == messagesService.countMessagesByChatId(chat.getId())) {
-            GenericSpecification<Keyword> spec = new GenericSpecification<>("chatId", "eq", chat.getId());
+        long chatId = chat.getId();
+
+        int newNumberOfMessages = messagesService.countMessagesByChatId(chatId);
+        if (chat.getNumberOfMessages() == newNumberOfMessages) {
+            GenericSpecification<Keyword> spec = new GenericSpecification<>("chatId", "eq", chatId);
             return keywordRepository.findAll(spec);
         }
 
-        keywordRepository.deleteByChatId(chat.getId());
+        chatRepository.updateNumberOfMessages(chatId, newNumberOfMessages);
 
-        OkHttpClient okHttpClient = new OkHttpClient();
-        Request request = new Request.Builder().url("http://localhost:5000/keywords/en/chat_id=1").build();
+        keywordRepository.deleteByChatId(chatId);
 
-        List<Keyword> keywords = new ArrayList<>();
-        okHttpClient.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                System.out.println("Network not found!!");
-                e.printStackTrace();
-            }
-
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                JSONArray json = new JSONArray(Objects.requireNonNull(response.body()).string());
-                System.out.println(json);
-                for (int i = 0; i < json.length(); i++) {
-                    keywords.add(new Keyword(0, chat.getId(), json.getJSONArray(i).getString(0)));
-                }
-            }
-        });
-
-        //TODO: fix this
-        while (keywords.isEmpty()) {}
+        List<Keyword> keywords = rake.apply(messagesService.getChatText(chatId)).stream()
+                .map(word -> new Keyword(0, chatId, word))
+                .collect(Collectors.toList());
 
         keywordRepository.saveAll(keywords);
 
