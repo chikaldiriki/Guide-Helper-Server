@@ -20,12 +20,11 @@ dependencies {
     implementation 'org.springframework.security:spring-security-test'*/
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
-    // PYTHON SERVER ACCESS
-    implementation 'com.squareup.okhttp3:okhttp:4.9.0'
-    implementation 'org.json:json:20171018'
-
     // JUNIT TESTING
     implementation 'junit:junit:4.12'
+
+    // FIREBASE
+    implementation 'com.google.firebase:firebase-admin:6.11.0'
 
     // MYSQL
     runtimeOnly 'mysql:mysql-connector-java'
@@ -36,6 +35,8 @@ dependencies {
     implementation 'org.projectlombok:lombok'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
+
+    implementation 'org.jetbrains:annotations:16.0.2'
 
     testCompileOnly 'org.projectlombok:lombok'
     testAnnotationProcessor 'org.projectlombok:lombok'

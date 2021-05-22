@@ -11,16 +11,14 @@ public class UserTest {
         User user = new User()
                 .setUserMail("johndoe@example.com")
                 .setCity("Moscow")
-                .setFirstName("John")
-                .setLastName("Doe")
+                .setName("John")
                 .setGuide(true)
                 .setDescription("I like discrete math...")
                 .setPhoneNumber("123456789");
 
         Assertions.assertEquals(user.getUserMail(), "johndoe@example.com");
         Assertions.assertEquals(user.getCity(), "Moscow");
-        Assertions.assertEquals(user.getFirstName(), "John");
-        Assertions.assertEquals(user.getLastName(), "Doe");
+        Assertions.assertEquals(user.getName(), "John");
         Assertions.assertTrue(user.isGuide());
         Assertions.assertEquals(user.getDescription(), "I like discrete math...");
         Assertions.assertEquals(user.getPhoneNumber(), "123456789");

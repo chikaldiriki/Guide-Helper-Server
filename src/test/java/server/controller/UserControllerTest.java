@@ -49,8 +49,7 @@ public class UserControllerTest {
         user = new User()
                 .setUserMail("johndoe@example.com")
                 .setCity("Moscow")
-                .setFirstName("John")
-                .setLastName("Doe")
+                .setName("John")
                 .setGuide(true)
                 .setDescription("I like discrete math...")
                 .setPhoneNumber("123456789");
@@ -64,7 +63,7 @@ public class UserControllerTest {
         mockMvc.perform(get("/users/johndoe@example.com").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(print())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.firstName").value(user.getFirstName()));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.firstName").value(user.getName()));
     }
 
     @Test

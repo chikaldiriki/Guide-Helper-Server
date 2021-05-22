@@ -22,7 +22,7 @@ public class Chat {
 
     @Id
     @Column (name = "chat_id")
-    private int id;
+    private long id;
 
     @Column (name = "first_user_mail")
     private String firstUserMail;

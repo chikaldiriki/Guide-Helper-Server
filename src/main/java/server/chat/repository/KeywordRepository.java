@@ -7,4 +7,6 @@ import server.chat.model.Keyword;
 
 @Repository
 public interface KeywordRepository extends JpaRepository<Keyword, Integer>, JpaSpecificationExecutor<Keyword> {
+
+    long deleteByChatId(long chatId);
 }

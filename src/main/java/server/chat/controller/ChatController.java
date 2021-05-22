@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import server.chat.dto.ChatDTO;
 import server.chat.model.Keyword;
 import server.chat.service.ChatService;
+import server.chat.service.MessagesService;
 
 import java.util.List;
 
@@ -24,7 +25,7 @@ public class ChatController {
             description = "Если чата не существует, то чат создаётся и возвращается его id"
     )
     @GetMapping("/{firstUserId}/{secondUserId}")
-    public int getChatId(@PathVariable String firstUserId, @PathVariable String secondUserId) {
+    public long getChatId(@PathVariable String firstUserId, @PathVariable String secondUserId) {
         return chatService.getChatId(firstUserId, secondUserId);
     }
 
@@ -45,4 +46,5 @@ public class ChatController {
     public void deleteChat(@PathVariable String firstUserId, @PathVariable String secondUserId) {
         chatService.deleteChat(firstUserId, secondUserId);
     }
+
 }
