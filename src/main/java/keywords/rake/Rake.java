@@ -27,21 +27,23 @@ public class Rake {
     private int keywordsDivider = 3;
 
     public Rake(String language) {
-
-        if (!RakeUtils.supportingLanguages().contains(language)) {
-            throw new IllegalArgumentException("Language '" + language + "' not supporting!");
-        }
-
-        stopWords = RakeUtils.STOPWORDS.get(language);
+        setStopWords(language);
     }
 
     public void setStopWords(String language) {
+        if (!RakeUtils.supportingLanguages().contains(language)) {
+            throw new IllegalArgumentException("Language '" + language + "' not supporting!");
+        }
         stopWords = RakeUtils.STOPWORDS.get(language);
     }
 
 
     public List<String> apply(String text) {
         text = text.toLowerCase();
+
+        if (stopWords == null) {
+            stopWords = RakeUtils.STOPWORDS.get(RakeUtils.detectLanguage(text));
+        }
 
         List<String> sentences = RakeUtils.splitSentences(text);
 
@@ -51,8 +53,13 @@ public class Rake {
 
         TreeSet<Keyword> keywordsCandidates = getKeywordsCandidates(phrases, wordScores);
 
+        int divider = keywordsDivider;
+        if (keywordsCandidates.size() < keywordsDivider) {
+            divider = 1;
+        }
+
         return keywordsCandidates.stream()
-                .limit(keywordsCandidates.size() / keywordsDivider)
+                .limit(keywordsCandidates.size() / divider)
                 .map(Keyword::getWord)
                 .collect(Collectors.toList());
     }

@@ -16,6 +16,9 @@ public class ChatController {
     @Autowired
     private ChatService chatService;
 
+    @Autowired
+    private MessagesService messagesService;
+
     // create chat if not exist
     @GetMapping("/{firstUserId}/{secondUserId}")
     public long getChatId(@PathVariable String firstUserId, @PathVariable String secondUserId) {
@@ -36,6 +39,11 @@ public class ChatController {
     @DeleteMapping("/delete/{firstUserId}/{secondUserId}")
     public void deleteChat(@PathVariable String firstUserId, @PathVariable String secondUserId) {
         chatService.deleteChat(firstUserId, secondUserId);
+    }
+
+    @GetMapping("test/{chatId}")
+    public String testQuery(@PathVariable long chatId) {
+        return messagesService.getChatText(chatId);
     }
 
 }

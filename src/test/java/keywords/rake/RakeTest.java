@@ -1,6 +1,7 @@
 package keywords.rake;
 
 import keywords.rake.utils.RakeUtils;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -33,8 +34,17 @@ public class RakeTest {
     }
 
     @Test
-    public void applyTest() throws Exception {
+    public void applyTest() {
         Rake rake = new Rake(RakeUtils.RUSSIAN);
         System.out.println(rake.apply(testMessages));
+    }
+
+    @Test
+    public void detectLanguageTest() {
+        String text1 = "jwpdojewjpojdpojw  шоцоащуцозо jfwopejowjpfjwepojp";
+        String text2 = "сегодня мы будем изучать english";
+
+        Assertions.assertEquals(RakeUtils.ENGLISH, RakeUtils.detectLanguage(text1));
+        Assertions.assertEquals(RakeUtils.RUSSIAN, RakeUtils.detectLanguage(text2));
     }
 }

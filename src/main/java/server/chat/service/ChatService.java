@@ -13,6 +13,7 @@ import server.chat.repository.KeywordRepository;
 import server.mapper.Mapper;
 import server.specifications.GenericSpecification;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -29,8 +30,6 @@ public class ChatService {
 
     @Autowired
     private MessagesService messagesService;
-
-    private final Rake rake = new Rake();
 
     @Nullable
     private Chat getChatByUsers(String firstUserMail, String secondUserMail) {
@@ -71,7 +70,6 @@ public class ChatService {
     }
 
     public List<Keyword> getKeywords(String firstUserMail, String secondUserMail) {
-        //TODO: language detecting
         Chat chat = getChatByUsers(firstUserMail, secondUserMail);
         if (chat == null) {
             throw new IllegalArgumentException();
@@ -80,6 +78,9 @@ public class ChatService {
         long chatId = chat.getId();
 
         int newNumberOfMessages = messagesService.countMessagesByChatId(chatId);
+        if (newNumberOfMessages == 0) {
+            return Collections.emptyList();
+        }
         if (chat.getNumberOfMessages() == newNumberOfMessages) {
             GenericSpecification<Keyword> spec = new GenericSpecification<>("chatId", "eq", chatId);
             return keywordRepository.findAll(spec);
@@ -89,7 +90,11 @@ public class ChatService {
 
         keywordRepository.deleteByChatId(chatId);
 
-        List<Keyword> keywords = rake.apply(messagesService.getChatText(chatId)).stream()
+        String chatText = messagesService.getChatText(chatId);
+
+        Rake rake = new Rake();
+
+        List<Keyword> keywords = rake.apply(chatText).stream()
                 .map(word -> new Keyword(0, chatId, word))
                 .collect(Collectors.toList());
 

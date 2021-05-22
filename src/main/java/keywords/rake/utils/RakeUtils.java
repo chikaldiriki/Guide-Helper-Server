@@ -1042,4 +1042,23 @@ public class RakeUtils {
                 .filter(word -> !word.isEmpty() && !isNumeric(word))
                 .collect(Collectors.toList());
     }
+
+    public static String detectLanguage(String text) {
+        int enCount = 0;
+        int ruCount = 0;
+
+        for (char c : text.toCharArray()) {
+            if (c >= 'a' && c <= 'z') {
+                enCount++;
+            }
+            if (c >= 'а' && c <= 'я') {
+                ruCount++;
+            }
+        }
+
+        if (ruCount > enCount) {
+            return RUSSIAN;
+        }
+        return ENGLISH;
+    }
 }
