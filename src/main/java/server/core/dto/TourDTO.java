@@ -1,12 +1,16 @@
 package server.core.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Accessors(chain = true)
 @Schema(description = "Сущность экскурсии")
 public class TourDTO {
@@ -30,5 +34,5 @@ public class TourDTO {
     private Long cost;
 
     @Schema(description = "Картинка экскурсии")
-    private Byte[] image;
+    private String image;
 }
