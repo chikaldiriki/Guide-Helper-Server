@@ -21,7 +21,7 @@ CREATE TABLE `GuideHelperDB`.`Tours` (
   `guide_mail` VARCHAR(320) NOT NULL,
   `cost` INT UNSIGNED NULL DEFAULT 0,
   `description` TEXT NULL,
-  `tour_image` MEDIUMBLOB NULL,
+  `tour_image` VARCHAR(320) NULL,
   PRIMARY KEY (`tour_id`),
   INDEX `guide_mail_idx` (`guide_mail` ASC) VISIBLE,
   CONSTRAINT `guide_mail`
@@ -71,7 +71,6 @@ CREATE TABLE `GuideHelperDB`.`Chats` (
   `chat_id` INT NOT NULL AUTO_INCREMENT,
   `first_user_mail` VARCHAR(320) NOT NULL,
   `second_user_mail` VARCHAR(320) NOT NULL,
-  `uptodate` TINYINT(1) NOT NULL DEFAULT 0,
   `number_of_messages` INT NOT NULL DEFAULT 0,
   PRIMARY KEY (`chat_id`),
   INDEX `first_user_idx` (`first_user_mail` ASC) VISIBLE,

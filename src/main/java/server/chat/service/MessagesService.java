@@ -15,7 +15,7 @@ import java.util.concurrent.locks.ReentrantLock;
 @Service
 public class MessagesService {
 
-    private int numberOfMessages = 0;
+    private volatile int numberOfMessages = 0;
 
     private final Logger log = LoggerFactory.getLogger(MessagesService.class);
 

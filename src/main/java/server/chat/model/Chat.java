@@ -30,9 +30,6 @@ public class Chat {
     @Column (name = "second_user_mail")
     private String secondUserMail;
 
-    @Column (name = "uptodate")
-    private boolean upToDate;
-
     @Column (name = "number_of_messages")
     private int numberOfMessages;
 

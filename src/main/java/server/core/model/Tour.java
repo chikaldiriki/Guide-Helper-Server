@@ -38,6 +38,6 @@ public class Tour {
     private String description;
 
     @Column (name = "tour_image")
-    private Byte[] image;
+    private String image;
 
 }
