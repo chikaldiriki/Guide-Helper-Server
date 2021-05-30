@@ -10,9 +10,11 @@ import server.chat.model.Chat;
 import server.chat.model.Keyword;
 import server.chat.repository.ChatRepository;
 import server.chat.repository.KeywordRepository;
-import server.mapper.Mapper;
+import server.core.dto.UserDTO;
+import server.core.service.UserService;
 import server.specifications.GenericSpecification;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -30,6 +32,9 @@ public class ChatService {
 
     @Autowired
     private MessagesService messagesService;
+
+    @Autowired
+    private UserService userService;
 
     @Nullable
     private Chat getChatByUsers(String firstUserMail, String secondUserMail) {
@@ -66,7 +71,7 @@ public class ChatService {
         GenericSpecification<Chat> specSecondUser =
                 new GenericSpecification<>("secondUserMail", "eq", userId);
 
-        return Mapper.mapList(chatRepository.findAll(Specification.where(specFirstUser).or(specSecondUser)), ChatDTO.class);
+        return mapChatListToChatDTOList(chatRepository.findAll(Specification.where(specFirstUser).or(specSecondUser)));
     }
 
     public List<Keyword> getKeywords(String firstUserMail, String secondUserMail) {
@@ -105,5 +110,27 @@ public class ChatService {
 
     public void deleteChat(String firstUserId, String secondUserId) {
         chatRepository.delete(Objects.requireNonNull(getChatByUsers(firstUserId, secondUserId)));
+    }
+
+    private ChatDTO mapChatToChatDTO(Chat chat) {
+        UserDTO firstUser = userService.getUser(chat.getFirstUserMail());
+        UserDTO secondUser = userService.getUser(chat.getSecondUserMail());
+        return new ChatDTO()
+                .setFirstUserMail(firstUser.getUserMail())
+                .setFirstUserName(firstUser.getName())
+                .setFirstUserPhoto(firstUser.getAvatarUrl())
+                .setSecondUserMail(secondUser.getUserMail())
+                .setSecondUserName(secondUser.getName())
+                .setSecondUserPhoto(secondUser.getAvatarUrl());
+    }
+
+    private List<ChatDTO> mapChatListToChatDTOList(List<Chat> chats) {
+        List<ChatDTO> result = new ArrayList<>();
+
+        for (Chat chat : chats) {
+            result.add(mapChatToChatDTO(chat));
+        }
+
+        return result;
     }
 }

@@ -30,7 +30,7 @@ public class UserService {
             user.setDescription(newUser.getDescription());
             user.setAvatarUrl(newUser.getAvatarUrl());
             return userRepository.save(user);
-        }).orElseGet(() ->  {
+        }).orElseGet(() -> {
             User user = Mapper.map(newUser, User.class);
             user.setUserMail(userId);
             return userRepository.save(user);
