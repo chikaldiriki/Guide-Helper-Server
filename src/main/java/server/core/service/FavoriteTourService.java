@@ -18,18 +18,19 @@ public class FavoriteTourService {
     FavoriteTourRepository favoriteTourRepository;
 
     public void addFavoriteTour(FavoriteTourDTO newFavorite) {
-        //TODO: id increment
         favoriteTourRepository.save(Mapper.map(newFavorite, FavoriteTour.class));
     }
 
     public void deleteFavoriteTour(FavoriteTourDTO tourToDelete) {
-        GenericSpecification<FavoriteTour> userSpec =
-                new GenericSpecification<>("userMail", "eq", tourToDelete.getUserMail());
-        GenericSpecification<FavoriteTour> tourSpec =
-                new GenericSpecification<>("tourId", "eq", tourToDelete.getTourId());
-
-        List<FavoriteTour> favoriteTours = favoriteTourRepository.findAll(userSpec.and(tourSpec));
+        List<FavoriteTour> favoriteTours = favoriteTourRepository.getFavoriteTourByTourIdAndUserMail(
+                tourToDelete.getTourId(), tourToDelete.getUserMail()
+        );
         favoriteTourRepository.deleteAll(favoriteTours);
+    }
+
+    public boolean isFavorite(String userMail, Long tourId) {
+        List<FavoriteTour> favoriteTours = favoriteTourRepository.getFavoriteTourByTourIdAndUserMail(tourId, userMail);
+        return !favoriteTours.isEmpty();
     }
 
     public List<Long> getToursIdsByUser(String userMail) {

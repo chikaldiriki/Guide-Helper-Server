@@ -24,10 +24,18 @@ public class FavoriteTourController {
         favoriteTourService.addFavoriteTour(newFavorite);
     }
 
+    @Operation(summary = "Является ли экскурсия избранной у юзера")
+    @GetMapping("/{userMail}/{tourId}")
+    public boolean isFavorite(@PathVariable String userMail, @PathVariable Long tourId) {
+        return favoriteTourService.isFavorite(userMail, tourId);
+    }
+
     @Operation(summary = "Удалить избранную экскурсию")
     @DeleteMapping("/delete")
     public void deleteFavoriteTour(@RequestBody FavoriteTourDTO favoriteTourDTO) {
         favoriteTourService.deleteFavoriteTour(favoriteTourDTO);
     }
+
+
 
 }

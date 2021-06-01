@@ -126,4 +126,6 @@ INSERT INTO GuideHelperDB.Orders (order_id, user_mail, tour_id, date_time) VALUE
 
 INSERT INTO GuideHelperDB.Orders (order_id, user_mail, tour_id, date_time) VALUES (2, 'firstUser@gmail.com', 1, '2015-05-01 15:00:00.0');
 
+INSERT INTO Favorites (`favorite_id`, `user_id`, `tour_id`) VALUES (0, 'firstUser@gmail.com', 1);
+
 
