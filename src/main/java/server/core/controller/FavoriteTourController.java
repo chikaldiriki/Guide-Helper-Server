@@ -31,11 +31,10 @@ public class FavoriteTourController {
     }
 
     @Operation(summary = "Удалить избранную экскурсию")
-    @DeleteMapping("/delete")
-    public void deleteFavoriteTour(@RequestBody FavoriteTourDTO favoriteTourDTO) {
-        favoriteTourService.deleteFavoriteTour(favoriteTourDTO);
+    @DeleteMapping("/delete/{userMail}/{tourId}")
+    public void deleteFavoriteTour(@PathVariable String userMail, @PathVariable Long tourId) {
+        favoriteTourService.deleteFavoriteTour(new FavoriteTourDTO().setUserMail(userMail).setTourId(tourId));
     }
-
 
 
 }
