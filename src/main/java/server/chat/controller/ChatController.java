@@ -37,7 +37,7 @@ public class ChatController {
 
     @Operation(summary = "Получить cписок ключевых слов чата по id собеседников")
     @GetMapping("/keywords/{firstUserId}/{secondUserId}")
-    public List<Keyword> getKeyWords(@PathVariable String firstUserId, @PathVariable String secondUserId) {
+    public List<String> getKeyWords(@PathVariable String firstUserId, @PathVariable String secondUserId) {
         return chatService.getKeywords(firstUserId, secondUserId);
     }
 

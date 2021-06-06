@@ -59,7 +59,7 @@ public class ChatService {
     public long getChatId(String firstUserMail, String secondUserMail) {
         Chat chat = getChatByUsers(firstUserMail, secondUserMail);
         if (chat == null) {
-            chat = new Chat().setFirstUserMail(firstUserMail).setSecondUserMail(secondUserMail);
+            chat = new Chat().setFirstUserMail(firstUserMail).setSecondUserMail(secondUserMail).setNumberOfMessages(0);
             return chatRepository.save(chat).getId();
         }
         return chat.getId();
@@ -74,10 +74,11 @@ public class ChatService {
         return mapChatListToChatDTOList(chatRepository.findAll(Specification.where(specFirstUser).or(specSecondUser)));
     }
 
-    public List<Keyword> getKeywords(String firstUserMail, String secondUserMail) {
+    public List<String> getKeywords(String firstUserMail, String secondUserMail) {
         Chat chat = getChatByUsers(firstUserMail, secondUserMail);
         if (chat == null) {
-            throw new IllegalArgumentException();
+            return Collections.singletonList("CHAT NOT FOUND");
+            //throw new IllegalArgumentException();
         }
 
         long chatId = chat.getId();
@@ -88,7 +89,7 @@ public class ChatService {
         }
         if (chat.getNumberOfMessages() == newNumberOfMessages) {
             GenericSpecification<Keyword> spec = new GenericSpecification<>("chatId", "eq", chatId);
-            return keywordRepository.findAll(spec);
+            return keywordRepository.findAll(spec).stream().map(Keyword::getWord).collect(Collectors.toList());
         }
 
         chatRepository.updateNumberOfMessages(chatId, newNumberOfMessages);
@@ -105,7 +106,7 @@ public class ChatService {
 
         keywordRepository.saveAll(keywords);
 
-        return keywords;
+        return keywords.stream().map(Keyword::getWord).collect(Collectors.toList());
     }
 
     public void deleteChat(String firstUserId, String secondUserId) {
