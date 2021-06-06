@@ -17,7 +17,7 @@ public class UserDTO {
     private String userMail;
 
     @Schema(description = "Является ли пользователь гидом")
-    private boolean isGuide;
+    private Boolean isGuide;
 
     @Schema(description = "Имя пользователя")
     private String name;

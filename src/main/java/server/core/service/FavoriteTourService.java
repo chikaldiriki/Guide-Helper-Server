@@ -18,7 +18,7 @@ public class FavoriteTourService {
     FavoriteTourRepository favoriteTourRepository;
 
     public void addFavoriteTour(FavoriteTourDTO newFavorite) {
-        favoriteTourRepository.save(Mapper.map(newFavorite, FavoriteTour.class));
+        favoriteTourRepository.save(mapFavoriteTourDTOtoFavoriteTour(newFavorite));
     }
 
     public void deleteFavoriteTour(FavoriteTourDTO tourToDelete) {
@@ -37,4 +37,9 @@ public class FavoriteTourService {
         GenericSpecification<FavoriteTour> spec = new GenericSpecification<>("userMail", "eq", userMail);
         return favoriteTourRepository.findAll(spec).stream().map(FavoriteTour::getTourId).collect(Collectors.toList());
     }
+
+    private FavoriteTour mapFavoriteTourDTOtoFavoriteTour(FavoriteTourDTO favoriteTourDTO) {
+        return new FavoriteTour().setTourId(favoriteTourDTO.getTourId()).setUserMail(favoriteTourDTO.getUserMail());
+    }
+
 }

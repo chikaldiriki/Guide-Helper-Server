@@ -18,12 +18,13 @@ public class UserService {
     }
 
     public UserDTO getUser(String userId) {
-        return Mapper.map(userRepository.findById(userId).get(), UserDTO.class);
+        User user = userRepository.findById(userId).get();
+        return Mapper.map(user, UserDTO.class).setIsGuide(user.isGuide());
     }
 
     public void updateUser(UserDTO newUser, String userId) {
         userRepository.findById(userId).map(user -> {
-            user.setGuide(newUser.isGuide());
+            user.setGuide(newUser.getIsGuide());
             user.setName(newUser.getName());
             user.setPhoneNumber(newUser.getPhoneNumber());
             user.setCity(newUser.getCity());
@@ -43,7 +44,7 @@ public class UserService {
 
     public void setGuideStatus(String userId) {
         UserDTO user = getUser(userId);
-        user.setGuide(true);
+        user.setIsGuide(true);
         updateUser(user, userId);
     }
 }
