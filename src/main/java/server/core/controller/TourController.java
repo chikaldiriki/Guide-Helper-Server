@@ -47,6 +47,12 @@ public class TourController {
         return tourService.getToursByCitySortedByParameter(city, sorted);
     }
 
+    @Operation(summary = "Получить список экскурсий с ценой не более данной")
+    @GetMapping("/cost")
+    public List<TourDTO> getToursWithCostLimit(@RequestParam Long costLimit) {
+        return tourService.getToursWithCostLimit(costLimit);
+    }
+
     @Operation(
             summary = "Получить список всех экскурсий, заказанных пользователем, с датой начала не раньше time",
             description = "Время в формате YYYY-MM-DD'T'hh:mm:ss, например : 2007-12-03T10:15:30"

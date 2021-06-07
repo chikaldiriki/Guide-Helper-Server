@@ -76,6 +76,11 @@ public class TourService {
         return mapToDTOList(tourRepository.findAll(spec));
     }
 
+    public List<TourDTO> getToursWithCostLimit(Long cost) {
+        GenericSpecification<Tour> spec = new GenericSpecification<>("cost", "lte", cost);
+        return mapToDTOList(tourRepository.findAll(spec));
+    }
+
     public List<TourDTO> getToursByGuide(String guideId) {
         GenericSpecification<Tour> spec = new GenericSpecification<>("guideId", "eq", guideId);
         return mapToDTOList(tourRepository.findAll(spec));
