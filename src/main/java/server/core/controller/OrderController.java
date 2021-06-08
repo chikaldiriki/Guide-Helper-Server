@@ -42,12 +42,6 @@ public class OrderController {
         return orderService.getComingOrders(userId, date);
     }
 
-    @GetMapping("/test/foo")
-    public String testQuery(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-                                    LocalDateTime date) {
-        return "KEK: " + date.toString();
-    }
-
     @Operation(summary = "Добавить заказ")
     @PostMapping("")
     public void addOrder(OrderDTO orderDTO) {
@@ -55,8 +49,8 @@ public class OrderController {
     }
 
     @Operation(summary = "Удалить заказ")
-    @DeleteMapping("/delete")
-    public void deleteOrder(OrderDTO orderDTO) {
-        orderService.deleteOrder(orderDTO);
+    @DeleteMapping("/delete/{customerMail}/{tourId}/{time}")
+    public void deleteOrder(@PathVariable String customerMail, @PathVariable Long tourId, @PathVariable String time) {
+        orderService.deleteOrder(customerMail, tourId, time);
     }
 }
