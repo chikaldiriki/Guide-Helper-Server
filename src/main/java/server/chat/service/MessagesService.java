@@ -28,6 +28,7 @@ public class MessagesService {
     public int countMessagesByChatId(long chatId) {
         DatabaseReference queryRef = getQueryRef(chatId);
 
+
         final Lock countLock = new ReentrantLock();
         final Condition isCounted = countLock.newCondition();
 
@@ -56,7 +57,7 @@ public class MessagesService {
         countLock.lock();
         try {
             numberOfMessages = -1;
-            queryRef.addValueEventListener(listener);
+            queryRef.addListenerForSingleValueEvent(listener);
             while (numberOfMessages == -1) {
                 isCounted.await();
             }
@@ -101,7 +102,7 @@ public class MessagesService {
             }
         };
 
-        queryRef.addValueEventListener(listener);
+        queryRef.addListenerForSingleValueEvent(listener);
 
         chatLock.lock();
         try {
