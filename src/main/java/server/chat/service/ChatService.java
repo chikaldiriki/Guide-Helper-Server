@@ -14,10 +14,7 @@ import server.core.dto.UserDTO;
 import server.core.service.UserService;
 import server.specifications.GenericSpecification;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -56,6 +53,15 @@ public class ChatService {
         return chats.get(0);
     }
 
+    private List<Chat> getChatsByUser(String userMail) {
+        GenericSpecification<Chat> specFirstUser =
+                new GenericSpecification<>("firstUserMail", "eq", userMail);
+        GenericSpecification<Chat> specSecondUser =
+                new GenericSpecification<>("secondUserMail", "eq", userMail);
+
+        return chatRepository.findAll(Specification.where(specFirstUser).or(specSecondUser));
+    }
+
     public long getChatId(String firstUserMail, String secondUserMail) {
         Chat chat = getChatByUsers(firstUserMail, secondUserMail);
         if (chat == null) {
@@ -66,12 +72,9 @@ public class ChatService {
     }
 
     public List<ChatDTO> getDialogs(String userId) {
-        GenericSpecification<Chat> specFirstUser =
-                new GenericSpecification<>("firstUserMail", "eq", userId);
-        GenericSpecification<Chat> specSecondUser =
-                new GenericSpecification<>("secondUserMail", "eq", userId);
 
-        return mapChatListToChatDTOList(chatRepository.findAll(Specification.where(specFirstUser).or(specSecondUser)));
+
+        return mapChatListToChatDTOList(getChatsByUser(userId));
     }
 
     public List<String> getKeywords(String firstUserMail, String secondUserMail) {
@@ -107,6 +110,34 @@ public class ChatService {
         keywordRepository.saveAll(keywords);
 
         return keywords.stream().map(Keyword::getWord).collect(Collectors.toList());
+    }
+
+    public List<ChatDTO> getChatsByKeyword(String keyword) {
+        List<Long> chatIds = keywordRepository.getKeywordsByWord(keyword).stream()
+                .map(Keyword::getChatId)
+                .collect(Collectors.toList());
+        return mapChatListToChatDTOList(chatIds.stream()
+                .map(id -> chatRepository.findById(id).orElseThrow())
+                .collect(Collectors.toList()));
+    }
+
+    public List<String> getPopularKeywords(String userMail) {
+        List<Chat> chats = getChatsByUser(userMail);
+        List<String> popularKeywords = chats.stream()
+                .flatMap(chat -> keywordRepository.getKeywordsByChatId(chat.getId()).stream())
+                .collect(Collectors.groupingBy(Keyword::getWord, Collectors.counting()))
+                .entrySet()
+                .stream()
+                .sorted(Comparator.comparingLong(Map.Entry<String, Long>::getValue).reversed())
+                .limit(5)
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toList());
+
+        if (popularKeywords.isEmpty()) {
+            popularKeywords.add("No keywords ((");
+        }
+
+        return popularKeywords;
     }
 
     public void deleteChat(String firstUserId, String secondUserId) {

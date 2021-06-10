@@ -41,6 +41,17 @@ public class ChatController {
         return chatService.getKeywords(firstUserId, secondUserId);
     }
 
+    @Operation(summary = "Получить список чатов, содержащих некое ключевое слово")
+    @GetMapping("/keywords/word={word}")
+    public List<ChatDTO> getChatsByKeyword(@PathVariable String word) {
+        return chatService.getChatsByKeyword(word);
+    }
+
+    @GetMapping("/keywords/user_mail={userMail}")
+    public List<String> getPopularKeywords(@PathVariable String userMail) {
+        return chatService.getPopularKeywords(userMail);
+    }
+
     @Operation(summary = "Удалить чат по id собеседников")
     @DeleteMapping("/delete/{firstUserId}/{secondUserId}")
     public void deleteChat(@PathVariable String firstUserId, @PathVariable String secondUserId) {
