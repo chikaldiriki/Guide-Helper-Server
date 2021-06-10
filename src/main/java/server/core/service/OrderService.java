@@ -50,9 +50,11 @@ public class OrderService {
     }
 
     public void deleteOrder(String customerMail, Long tourId, String timeString) {
-        Order orderToDelete = orderRepository.getOrderByCustomerMailAndAndTourIdAndTourTime(customerMail, tourId,
+        System.out.println(customerMail);
+        System.out.println(tourId);
+        System.out.println(LocalDateTime.parse(timeString));
+        orderRepository.deleteOrdersByCustomerMailAndTourIdAndTourTime(customerMail, tourId,
                 LocalDateTime.parse(timeString));
-        orderRepository.delete(orderToDelete);
     }
 
     public void addOrder(OrderDTO orderDTO) {

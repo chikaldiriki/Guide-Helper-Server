@@ -44,7 +44,7 @@ public class OrderController {
 
     @Operation(summary = "Добавить заказ")
     @PostMapping("")
-    public void addOrder(OrderDTO orderDTO) {
+    public void addOrder(@RequestBody OrderDTO orderDTO) {
         orderService.addOrder(orderDTO);
     }
 
