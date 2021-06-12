@@ -45,9 +45,14 @@ public class ChatController {
         return chatService.getChatsByKeyword(word);
     }
 
-    @GetMapping("/keywords/user_mail={userMail}")
-    public List<String> getPopularKeywords(@PathVariable String userMail) {
-        return chatService.getPopularKeywords(userMail);
+    @GetMapping("/keywords/new/user_mail={userMail}")
+    public List<String> getNewPopularKeywords(@PathVariable String userMail) {
+        return chatService.getNewPopularKeywords(userMail);
+    }
+
+    @GetMapping("/keywords/DB/user_mail={userMail}")
+    public List<String> getPopularKeywordsFromDB(@PathVariable String userMail) {
+        return chatService.getPopularKeywordsFromDB(userMail);
     }
 
     @Operation(summary = "Удалить чат по id собеседников")
