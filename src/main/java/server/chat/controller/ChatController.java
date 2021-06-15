@@ -45,11 +45,13 @@ public class ChatController {
         return chatService.getChatsByKeyword(word);
     }
 
+    @Operation(summary = "Сгенерировать самые часто встречающиеся ключевые слова в чатах юзера")
     @GetMapping("/keywords/new/user_mail={userMail}")
     public List<String> getNewPopularKeywords(@PathVariable String userMail) {
         return chatService.getNewPopularKeywords(userMail);
     }
 
+    @Operation(summary = "Получить самые часто встречающиеся ключевые слова в чатах юзера из базы данных")
     @GetMapping("/keywords/DB/user_mail={userMail}")
     public List<String> getPopularKeywordsFromDB(@PathVariable String userMail) {
         return chatService.getPopularKeywordsFromDB(userMail);
