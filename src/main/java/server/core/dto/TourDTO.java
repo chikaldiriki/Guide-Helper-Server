@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
+import java.sql.Time;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -35,4 +37,10 @@ public class TourDTO {
 
     @Schema(description = "Картинка экскурсии")
     private String image;
+
+    @Schema(description = "Размер группы")
+    private int capacity;
+
+    @Schema(description = "Продолжительность экскурсии")
+    private Time duration;
 }

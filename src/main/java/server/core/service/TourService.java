@@ -30,7 +30,7 @@ public class TourService {
     private TourDTO mapToDTO(Tour tour) {
         return new TourDTO(tour.getId(), tour.getTitle(), tour.getCity(),
                 tour.getDescription(), tour.getGuide(), tour.getCost(),
-                ImageService.getTourImageCode(tour));
+                ImageService.getTourImageCode(tour), tour.getCapacity(), tour.getDuration());
     }
 
     private List<TourDTO> mapToDTOList(List<Tour> tours) {
@@ -40,7 +40,7 @@ public class TourService {
     private Tour mapToEntity(TourDTO tourDTO) {
         return new Tour(tourDTO.getId(), tourDTO.getTitle(), tourDTO.getCity(),
                 tourDTO.getGuide(), tourDTO.getCost(), tourDTO.getDescription(),
-                ImageService.saveTourImage(tourDTO));
+                ImageService.saveTourImage(tourDTO), tourDTO.getCapacity(), tourDTO.getDuration());
     }
 
     public TourDTO getTour(Long tourId) {
@@ -105,6 +105,8 @@ public class TourService {
             tour.setCost(tourDTO.getCost());
             tour.setDescription(tourDTO.getDescription());
             tour.setImage(imagePath);
+            tour.setCapacity(tourDTO.getCapacity());
+            tour.setDuration(tourDTO.getDuration());
             return tourRepository.save(tour);
         }).orElseGet(() -> {
             Tour tour = mapToEntity(tourDTO);
