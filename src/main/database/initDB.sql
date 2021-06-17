@@ -12,6 +12,7 @@ CREATE TABLE `GuideHelperDB`.`Users` (
   `city` TINYTEXT NULL,
   `description` TEXT NULL,
   `avatar_url` VARCHAR(1024) NULL,
+  `token` VARCHAR(170) NULL,
   PRIMARY KEY (`user_mail`));
 
 CREATE TABLE `GuideHelperDB`.`Tours` (
