@@ -17,7 +17,7 @@ public class ChatController {
     @Autowired
     private ChatService chatService;
 
-    // create chat if not exist
+
     @Operation(
             summary = "Получить id чата по id пользователей",
             description = "Если чата не существует, то чат создаётся и возвращается его id"

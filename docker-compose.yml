@@ -4,7 +4,6 @@ services:
 
   database:
     build: ./src/main/database/
-    #image: guide-helper-db
     restart: always
     environment:
       MYSQL_ROOT_USER: root
@@ -18,7 +17,6 @@ services:
   server:
     build: .
     restart: on-failure
-    #image: server
     depends_on:
       - database
     links: 

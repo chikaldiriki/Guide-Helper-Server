@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import server.core.dto.FavoriteTourDTO;
 import server.core.model.FavoriteTour;
 import server.core.repository.FavoriteTourRepository;
-import server.mapper.Mapper;
 import server.specifications.GenericSpecification;
 
 import java.util.List;

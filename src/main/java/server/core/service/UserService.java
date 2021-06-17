@@ -18,7 +18,7 @@ public class UserService {
     }
 
     public UserDTO getUser(String userId) {
-        User user = userRepository.findById(userId).get();
+        User user = userRepository.findById(userId).orElseThrow();
         return Mapper.map(user, UserDTO.class).setIsGuide(user.isGuide());
     }
 

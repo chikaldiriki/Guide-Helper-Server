@@ -19,10 +19,4 @@ public class SearchCriteria {
         this.operation = SearchOperation.fromValue(operation);
         this.arguments = Collections.singletonList(argument);
     }
-
-    public SearchCriteria(String key, String operation, List<Object> arguments) {
-        this.key = key;
-        this.operation = SearchOperation.fromValue(operation);
-        this.arguments = arguments;
-    }
 }
