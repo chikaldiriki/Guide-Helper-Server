@@ -94,7 +94,7 @@ public class TourService {
     public void addTour(TourDTO tourDTO) {
         Tour tour = tourRepository.save(mapToEntity(tourDTO));
         tourRepository.updateImageById(tour.getId(),
-                ImageService.saveTourImage(tourDTO.getImage(), tourDTO.getGuide(), tourDTO.getId()));
+                ImageService.saveTourImage(tourDTO.getImage(), tour.getGuide(), tour.getId()));
     }
 
     public void updateTour(TourDTO tourDTO, Long tourId) {
