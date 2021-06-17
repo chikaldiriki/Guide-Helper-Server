@@ -17,7 +17,7 @@ public class ChatController {
     @Autowired
     private ChatService chatService;
 
-    // create chat if not exist
+
     @Operation(
             summary = "Получить id чата по id пользователей",
             description = "Если чата не существует, то чат создаётся и возвращается его id"
@@ -45,11 +45,13 @@ public class ChatController {
         return chatService.getChatsByKeyword(word);
     }
 
+    @Operation(summary = "Сгенерировать самые часто встречающиеся ключевые слова в чатах юзера")
     @GetMapping("/keywords/new/user_mail={userMail}")
     public List<String> getNewPopularKeywords(@PathVariable String userMail) {
         return chatService.getNewPopularKeywords(userMail);
     }
 
+    @Operation(summary = "Получить самые часто встречающиеся ключевые слова в чатах юзера из базы данных")
     @GetMapping("/keywords/DB/user_mail={userMail}")
     public List<String> getPopularKeywordsFromDB(@PathVariable String userMail) {
         return chatService.getPopularKeywordsFromDB(userMail);

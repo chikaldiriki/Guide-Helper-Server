@@ -27,6 +27,18 @@ public class UserController {
         return userService.getUser(userId);
     }
 
+    @Operation(summary = "Получить токен по почте пользователя")
+    @GetMapping("/token/{userMail}")
+    public String getToken(@PathVariable String userMail) {
+        return userService.getTokenById(userMail);
+    }
+
+    @Operation(summary = "Обновить токен пользователя")
+    @PutMapping("/token/{userMail}/{token}")
+    public void updateToken(@PathVariable String userMail, @PathVariable String token) {
+        userService.updateTokenById(userMail, token);
+    }
+
     @Operation(summary = "Изменить пользователя по id")
     @PutMapping("/{userId}")
     public void updateUser(@RequestBody UserDTO userDTO, @PathVariable String userId) {

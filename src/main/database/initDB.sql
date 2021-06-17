@@ -12,6 +12,7 @@ CREATE TABLE `GuideHelperDB`.`Users` (
   `city` TINYTEXT NULL,
   `description` TEXT NULL,
   `avatar_url` VARCHAR(1024) NULL,
+  `token` VARCHAR(170) NULL,
   PRIMARY KEY (`user_mail`));
 
 CREATE TABLE `GuideHelperDB`.`Tours` (
@@ -22,6 +23,8 @@ CREATE TABLE `GuideHelperDB`.`Tours` (
   `cost` INT UNSIGNED NULL DEFAULT 0,
   `description` TEXT NULL,
   `tour_image` VARCHAR(320) NULL,
+  `capacity` INT,
+  `duration` TIME,
   PRIMARY KEY (`tour_id`),
   INDEX `guide_mail_idx` (`guide_mail` ASC) VISIBLE,
   CONSTRAINT `guide_mail`
@@ -111,16 +114,16 @@ INSERT INTO `GuideHelperDB`.`Users`
  VALUES ('secondUser@gmail.com', '1', 'Kek', '+7-977-777-77-77', 'Spb', 'Test Query 2', null);
 
 INSERT INTO `GuideHelperDB`.`Tours`
- (`tour_id`, `title`, `city`, `guide_mail`, `cost`, `description`, `tour_image`)
- VALUES (1, 'test tour', 'saintpy', 'secondUser@gmail.com', 100, 'test description', null);
+ (`tour_id`, `title`, `city`, `guide_mail`, `cost`, `description`, `tour_image`, `capacity`, `duration`)
+ VALUES (1, 'test tour', 'saintpy', 'secondUser@gmail.com', 100, 'test description', null, 20, '02:00:00');
 
 INSERT INTO `GuideHelperDB`.`Tours`
- (`tour_id`, `title`, `city`, `guide_mail`, `cost`, `description`, `tour_image`)
- VALUES (2, 'msk tour', 'msk', 'firstUser@gmail.com', 300, 'The extensive sightseeing tour of Moscow is the main tourist route not only for the guests of the city, but also for the residents of Moscow. A tour of Moscow - it can be called a perennial classics, because it allows to get acquainted with legendary sights and to create a holistic perception of the majestic capital. ', null);
+ (`tour_id`, `title`, `city`, `guide_mail`, `cost`, `description`, `tour_image`, `capacity`, `duration`)
+ VALUES (2, 'msk tour', 'msk', 'firstUser@gmail.com', 300, 'The extensive sightseeing tour of Moscow is the main tourist route not only for the guests of the city, but also for the residents of Moscow. A tour of Moscow - it can be called a perennial classics, because it allows to get acquainted with legendary sights and to create a holistic perception of the majestic capital. ', null, 15, '01:30:00');
 
 INSERT INTO `GuideHelperDB`.`Tours`
-(`tour_id`, `title`, `city`, guide_mail, cost, description, `tour_image`)
-VALUES (3, 'yar tour', 'sainyartpy', 'thdUser@gmail.com', 500, 'The ceremonial halls of the Winter Palace, the exhibits of the Old Hermitage and the New Hermitage - on excursion you will discover the treasury of one of the main museums of the world. You will find the collections of ancient and Egyptian halls, as well as immersion in the culture of Western Europe - we will break down the plot of the paintings, penetrate the mysteries of painting and talk about the creative path of artists', null);
+(`tour_id`, `title`, `city`, guide_mail, cost, description, `tour_image`, `capacity`, `duration`)
+VALUES (3, 'yar tour', 'sainyartpy', 'thdUser@gmail.com', 500, 'The ceremonial halls of the Winter Palace, the exhibits of the Old Hermitage and the New Hermitage - on excursion you will discover the treasury of one of the main museums of the world. You will find the collections of ancient and Egyptian halls, as well as immersion in the culture of Western Europe - we will break down the plot of the paintings, penetrate the mysteries of painting and talk about the creative path of artists', null, 10, '01:00:00');
 
 INSERT INTO GuideHelperDB.Orders (order_id, user_mail, tour_id, date_time) VALUES (1, 'firstUser@gmail.com', 1, '2021-05-01 15:00:00.0');
 

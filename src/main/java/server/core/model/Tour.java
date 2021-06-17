@@ -7,6 +7,7 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
+import java.sql.Time;
 
 @Entity
 @AllArgsConstructor
@@ -39,5 +40,11 @@ public class Tour {
 
     @Column (name = "tour_image")
     private String image;
+
+    @Column (name = "capacity")
+    private int capacity;
+
+    @Column (name = "duration")
+    private Time duration;
 
 }

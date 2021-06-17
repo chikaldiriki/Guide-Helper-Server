@@ -1,7 +1,6 @@
 package server.core.service;
 
 import org.springframework.stereotype.Service;
-import server.core.dto.TourDTO;
 import server.core.model.Tour;
 
 import java.io.IOException;
@@ -15,14 +14,14 @@ public class ImageService {
 
     public static final String ERROR = "ERROR";
 
-    public static String saveTourImage(TourDTO tour) {
-        if (tour.getImage() == null) {
+    public static String saveTourImage(String imageString, String guide, Long tourId) {
+        if (imageString == null) {
             return null;
         }
-        byte[] image = Base64.getDecoder().decode(tour.getImage());
-        String imagePath = imagesDirectory +  tour.getGuide() + "/" + tour.getId();
+        byte[] image = Base64.getDecoder().decode(imageString);
+        String imagePath = imagesDirectory +  guide + "/" + tourId;
         try {
-            Files.createDirectories(Path.of(imagesDirectory +  tour.getGuide()));
+            Files.createDirectories(Path.of(imagesDirectory +  guide));
             Files.write(Path.of(imagePath), image);
         } catch (IOException ex) {
             ex.printStackTrace();

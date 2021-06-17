@@ -30,7 +30,7 @@ public class TourService {
     private TourDTO mapToDTO(Tour tour) {
         return new TourDTO(tour.getId(), tour.getTitle(), tour.getCity(),
                 tour.getDescription(), tour.getGuide(), tour.getCost(),
-                ImageService.getTourImageCode(tour));
+                ImageService.getTourImageCode(tour), tour.getCapacity(), tour.getDuration());
     }
 
     private List<TourDTO> mapToDTOList(List<Tour> tours) {
@@ -40,7 +40,7 @@ public class TourService {
     private Tour mapToEntity(TourDTO tourDTO) {
         return new Tour(tourDTO.getId(), tourDTO.getTitle(), tourDTO.getCity(),
                 tourDTO.getGuide(), tourDTO.getCost(), tourDTO.getDescription(),
-                ImageService.saveTourImage(tourDTO));
+                null, tourDTO.getCapacity(), tourDTO.getDuration());
     }
 
     public TourDTO getTour(Long tourId) {
@@ -92,11 +92,13 @@ public class TourService {
     }
 
     public void addTour(TourDTO tourDTO) {
-        tourRepository.save(mapToEntity(tourDTO));
+        Tour tour = tourRepository.save(mapToEntity(tourDTO));
+        tourRepository.updateImageById(tour.getId(),
+                ImageService.saveTourImage(tourDTO.getImage(), tour.getGuide(), tour.getId()));
     }
 
     public void updateTour(TourDTO tourDTO, Long tourId) {
-        String imagePath = ImageService.saveTourImage(tourDTO);
+        String imagePath = ImageService.saveTourImage(tourDTO.getImage(), tourDTO.getGuide(), tourDTO.getId());
 
         tourRepository.findById(tourId).map(tour -> {
             tour.setTitle(tourDTO.getTitle());
@@ -105,10 +107,13 @@ public class TourService {
             tour.setCost(tourDTO.getCost());
             tour.setDescription(tourDTO.getDescription());
             tour.setImage(imagePath);
+            tour.setCapacity(tourDTO.getCapacity());
+            tour.setDuration(tourDTO.getDuration());
             return tourRepository.save(tour);
         }).orElseGet(() -> {
             Tour tour = mapToEntity(tourDTO);
             tour.setId(tourId);
+            tour.setImage(imagePath);
             return tourRepository.save(tour);
         });
     }

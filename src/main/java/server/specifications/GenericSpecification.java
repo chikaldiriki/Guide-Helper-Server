@@ -13,15 +13,6 @@ public class GenericSpecification<T> implements Specification<T> {
 
     private final SearchCriteria searchCriteria;
 
-
-    public GenericSpecification(SearchCriteria searchCriteria) {
-        this.searchCriteria = searchCriteria;
-    }
-
-    public GenericSpecification(String key, String operation, List<Object> args) {
-        searchCriteria = new SearchCriteria(key, operation, args);
-    }
-
     public GenericSpecification(String key, String operation, Object argument) {
         searchCriteria = new SearchCriteria(key, operation, argument);
     }
@@ -46,7 +37,7 @@ public class GenericSpecification<T> implements Specification<T> {
                 return criteriaBuilder.notEqual(root.get(searchCriteria.getKey()), arg);
 
             case GREATER_THAN:
-                return criteriaBuilder.greaterThan(root.get(searchCriteria.getKey()), (Comparable) arg); //(Comparable)
+                return criteriaBuilder.greaterThan(root.get(searchCriteria.getKey()), (Comparable) arg);
 
             case GREATER_THAN_OR_EQUAL_TO:
                 return criteriaBuilder.greaterThanOrEqualTo(root.get(searchCriteria.getKey()), (Comparable) arg);
