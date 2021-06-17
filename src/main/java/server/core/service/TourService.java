@@ -40,7 +40,7 @@ public class TourService {
     private Tour mapToEntity(TourDTO tourDTO) {
         return new Tour(tourDTO.getId(), tourDTO.getTitle(), tourDTO.getCity(),
                 tourDTO.getGuide(), tourDTO.getCost(), tourDTO.getDescription(),
-                ImageService.saveTourImage(tourDTO), tourDTO.getCapacity(), tourDTO.getDuration());
+                null, tourDTO.getCapacity(), tourDTO.getDuration());
     }
 
     public TourDTO getTour(Long tourId) {
@@ -92,11 +92,13 @@ public class TourService {
     }
 
     public void addTour(TourDTO tourDTO) {
-        tourRepository.save(mapToEntity(tourDTO));
+        Tour tour = tourRepository.save(mapToEntity(tourDTO));
+        tourRepository.updateImageById(tour.getId(),
+                ImageService.saveTourImage(tourDTO.getImage(), tourDTO.getGuide(), tourDTO.getId()));
     }
 
     public void updateTour(TourDTO tourDTO, Long tourId) {
-        String imagePath = ImageService.saveTourImage(tourDTO);
+        String imagePath = ImageService.saveTourImage(tourDTO.getImage(), tourDTO.getGuide(), tourDTO.getId());
 
         tourRepository.findById(tourId).map(tour -> {
             tour.setTitle(tourDTO.getTitle());
@@ -111,6 +113,7 @@ public class TourService {
         }).orElseGet(() -> {
             Tour tour = mapToEntity(tourDTO);
             tour.setId(tourId);
+            tour.setImage(imagePath);
             return tourRepository.save(tour);
         });
     }
