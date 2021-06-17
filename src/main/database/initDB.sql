@@ -101,34 +101,4 @@ CREATE TABLE `GuideHelperDB`.`Keywords` (
     ON DELETE CASCADE
     ON UPDATE CASCADE);
 
-INSERT INTO `GuideHelperDB`.`Users`
- (`user_mail`, `is_guide`, `name`, `phone_number`, `city`, `description`, `avatar_url`)
- VALUES ('firstUser@gmail.com', '0', 'Tester', '+7-977-777-77-77', 'Spb', 'Test Query 1', null);
-
-INSERT INTO `GuideHelperDB`.`Users`
-(`user_mail`, `is_guide`, `name`, `phone_number`, `city`, `description`, `avatar_url`)
-VALUES ('thdUser@gmail.com', '2', 'Petrov', '+7-977-777-77-77', 'Spb', 'Test Query 3', null);
-
-INSERT INTO `GuideHelperDB`.`Users`
- (`user_mail`, `is_guide`, `name`, `phone_number`, `city`, `description`, `avatar_url`)
- VALUES ('secondUser@gmail.com', '1', 'Kek', '+7-977-777-77-77', 'Spb', 'Test Query 2', null);
-
-INSERT INTO `GuideHelperDB`.`Tours`
- (`tour_id`, `title`, `city`, `guide_mail`, `cost`, `description`, `tour_image`, `capacity`, `duration`)
- VALUES (1, 'test tour', 'saintpy', 'secondUser@gmail.com', 100, 'test description', null, 20, '02:00:00');
-
-INSERT INTO `GuideHelperDB`.`Tours`
- (`tour_id`, `title`, `city`, `guide_mail`, `cost`, `description`, `tour_image`, `capacity`, `duration`)
- VALUES (2, 'msk tour', 'msk', 'firstUser@gmail.com', 300, 'The extensive sightseeing tour of Moscow is the main tourist route not only for the guests of the city, but also for the residents of Moscow. A tour of Moscow - it can be called a perennial classics, because it allows to get acquainted with legendary sights and to create a holistic perception of the majestic capital. ', null, 15, '01:30:00');
-
-INSERT INTO `GuideHelperDB`.`Tours`
-(`tour_id`, `title`, `city`, guide_mail, cost, description, `tour_image`, `capacity`, `duration`)
-VALUES (3, 'yar tour', 'sainyartpy', 'thdUser@gmail.com', 500, 'The ceremonial halls of the Winter Palace, the exhibits of the Old Hermitage and the New Hermitage - on excursion you will discover the treasury of one of the main museums of the world. You will find the collections of ancient and Egyptian halls, as well as immersion in the culture of Western Europe - we will break down the plot of the paintings, penetrate the mysteries of painting and talk about the creative path of artists', null, 10, '01:00:00');
-
-INSERT INTO GuideHelperDB.Orders (order_id, user_mail, tour_id, date_time) VALUES (1, 'firstUser@gmail.com', 1, '2021-05-01 15:00:00.0');
-
-INSERT INTO GuideHelperDB.Orders (order_id, user_mail, tour_id, date_time) VALUES (2, 'secondUser@gmail.com', 2, '2017-05-01 15:00:00.0');
-
-INSERT INTO Favorites (`favorite_id`, `user_id`, `tour_id`) VALUES (0, 'firstUser@gmail.com', 1);
-
 
