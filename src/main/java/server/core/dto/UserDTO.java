@@ -33,4 +33,7 @@ public class UserDTO {
   
     @Schema(description = "Url аватара пользователя из гугл почты")
     private String avatarUrl;
+
+    @Schema(description = "Токен для нотификаций")
+    private String token;
 }

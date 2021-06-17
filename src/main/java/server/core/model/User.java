@@ -42,6 +42,9 @@ public class User {
     @Column(name = "avatar_url")
     private String avatarUrl;
 
+    @Column(name = "token")
+    private String token;
+
     @Override
     public String toString() {
         return "User{" +

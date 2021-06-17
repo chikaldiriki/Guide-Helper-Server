@@ -30,12 +30,22 @@ public class UserService {
             user.setCity(newUser.getCity());
             user.setDescription(newUser.getDescription());
             user.setAvatarUrl(newUser.getAvatarUrl());
+            user.setToken(newUser.getToken());
             return userRepository.save(user);
         }).orElseGet(() -> {
             User user = Mapper.map(newUser, User.class);
             user.setUserMail(userId);
             return userRepository.save(user);
         });
+    }
+
+    public String getTokenById(String userId) {
+        User user = userRepository.findById(userId).orElseThrow();
+        return user.getToken();
+    }
+
+    public void updateTokenById(String userId, String token) {
+        userRepository.updateTokenByUserId(userId, token);
     }
 
     public void deleteUser(String userId) {
