@@ -24,7 +24,7 @@ CREATE TABLE `GuideHelperDB`.`Tours` (
   `description` TEXT NULL,
   `tour_image` VARCHAR(320) NULL,
   `capacity` INT,
-  `duration` TIME,
+  `duration` VARCHAR(15),
   PRIMARY KEY (`tour_id`),
   INDEX `guide_mail_idx` (`guide_mail` ASC) VISIBLE,
   CONSTRAINT `guide_mail`

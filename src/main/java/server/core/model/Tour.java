@@ -45,6 +45,6 @@ public class Tour {
     private int capacity;
 
     @Column (name = "duration")
-    private Time duration;
+    private String duration;
 
 }

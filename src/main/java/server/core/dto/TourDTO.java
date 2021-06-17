@@ -42,5 +42,5 @@ public class TourDTO {
     private int capacity;
 
     @Schema(description = "Продолжительность экскурсии")
-    private Time duration;
+    private String duration;
 }
