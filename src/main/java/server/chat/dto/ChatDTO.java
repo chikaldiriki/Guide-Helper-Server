@@ -9,6 +9,7 @@ import lombok.experimental.Accessors;
 @Setter
 @Accessors(chain = true)
 public class ChatDTO {
+
     @Schema(description = "Почта первого собеседника")
     private String firstUserMail;
 

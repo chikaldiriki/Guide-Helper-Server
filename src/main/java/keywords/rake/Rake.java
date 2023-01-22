@@ -22,8 +22,11 @@ public class Rake {
     private Set<String> stopWords;
 
     private int maxWords = 3;
+
     private int minChars = 3;
+
     private double minFreq = 1.0;
+
     private int keywordsDivider = 3;
 
     public Rake(String language) {

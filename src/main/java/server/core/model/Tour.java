@@ -6,8 +6,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
-import javax.persistence.*;
-import java.sql.Time;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @AllArgsConstructor
@@ -15,36 +19,36 @@ import java.sql.Time;
 @Setter
 @Getter
 @Accessors(chain = true)
-@Table (name = "Tours")
+@Table(name = "Tours")
 public class Tour {
 
     @Id
-    @Column (name = "tour_id")
+    @Column(name = "tour_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column (name = "title")
+    @Column(name = "title")
     private String title;
 
-    @Column (name = "city")
+    @Column(name = "city")
     private String city;
 
-    @Column (name = "guide_mail")
+    @Column(name = "guide_mail")
     private String guide;
 
-    @Column (name = "cost")
+    @Column(name = "cost")
     private Long cost;
 
-    @Column (name = "description")
+    @Column(name = "description")
     private String description;
 
-    @Column (name = "tour_image")
+    @Column(name = "tour_image")
     private String image;
 
-    @Column (name = "capacity")
+    @Column(name = "capacity")
     private int capacity;
 
-    @Column (name = "duration")
+    @Column(name = "duration")
     private String duration;
 
 }

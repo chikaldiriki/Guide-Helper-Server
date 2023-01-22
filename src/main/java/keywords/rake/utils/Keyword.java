@@ -13,11 +13,12 @@ import org.jetbrains.annotations.NotNull;
 public class Keyword implements Comparable<Keyword> {
 
     private String word;
+
     private double score;
 
     @Override
     public int compareTo(@NotNull Keyword keyword) {
-        int res =  Double.compare(keyword.score, score);
+        int res = Double.compare(keyword.score, score);
         if (res == 0) {
             res = word.compareTo(keyword.word);
         }

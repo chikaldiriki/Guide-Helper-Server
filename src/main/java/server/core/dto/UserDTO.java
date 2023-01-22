@@ -29,7 +29,7 @@ public class UserDTO {
 
     @Schema(description = "Описание пользователя о себе")
     private String description;
-  
+
     @Schema(description = "Url аватара пользователя из гугл почты")
     private String avatarUrl;
 

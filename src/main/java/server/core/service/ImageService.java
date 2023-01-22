@@ -19,9 +19,9 @@ public class ImageService {
             return null;
         }
         byte[] image = Base64.getDecoder().decode(imageString);
-        String imagePath = imagesDirectory +  guide + "/" + tourId;
+        String imagePath = imagesDirectory + guide + "/" + tourId;
         try {
-            Files.createDirectories(Path.of(imagesDirectory +  guide));
+            Files.createDirectories(Path.of(imagesDirectory + guide));
             Files.write(Path.of(imagePath), image);
         } catch (IOException ex) {
             ex.printStackTrace();

@@ -28,7 +28,6 @@ public class MessagesService {
     public int countMessagesByChatId(long chatId) {
         DatabaseReference queryRef = getQueryRef(chatId);
 
-
         final Lock countLock = new ReentrantLock();
         final Condition isCounted = countLock.newCondition();
 
@@ -110,11 +109,9 @@ public class MessagesService {
                 gotMessages.await();
             }
         } catch (InterruptedException ignored) {
-
         } finally {
             chatLock.unlock();
         }
-
 
         return String.join(" \n", messages);
     }

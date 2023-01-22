@@ -6,7 +6,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @AllArgsConstructor
@@ -18,17 +23,16 @@ import javax.persistence.*;
 public class Chat {
 
     @Id
-    @Column (name = "chat_id")
+    @Column(name = "chat_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column (name = "first_user_mail")
+    @Column(name = "first_user_mail")
     private String firstUserMail;
 
-    @Column (name = "second_user_mail")
+    @Column(name = "second_user_mail")
     private String secondUserMail;
 
-    @Column (name = "number_of_messages")
+    @Column(name = "number_of_messages")
     private int numberOfMessages;
-
 }

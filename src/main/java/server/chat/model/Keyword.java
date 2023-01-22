@@ -6,7 +6,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @AllArgsConstructor
@@ -19,12 +24,12 @@ public class Keyword {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="keyword_id")
+    @Column(name = "keyword_id")
     private int id;
 
-    @Column(name="chat_id")
+    @Column(name = "chat_id")
     private long chatId;
 
-    @Column(name="word")
+    @Column(name = "word")
     private String word;
 }

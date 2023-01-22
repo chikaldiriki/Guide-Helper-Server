@@ -15,5 +15,6 @@ public interface KeywordRepository extends JpaRepository<Keyword, Integer>, JpaS
     void deleteByChatId(long chatId);
 
     List<Keyword> getKeywordsByWord(String word);
+
     List<Keyword> getKeywordsByChatId(long chatId);
 }

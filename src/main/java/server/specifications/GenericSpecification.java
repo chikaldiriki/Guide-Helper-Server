@@ -17,7 +17,6 @@ public class GenericSpecification<T> implements Specification<T> {
         searchCriteria = new SearchCriteria(key, operation, argument);
     }
 
-
     @Override
     @SuppressWarnings({"unchecked", "rawtypes"})
     public Predicate toPredicate(@NotNull Root<T> root, @NotNull CriteriaQuery<?> query, @NotNull CriteriaBuilder criteriaBuilder) {
@@ -55,7 +54,7 @@ public class GenericSpecification<T> implements Specification<T> {
                 return root.get(searchCriteria.getKey()).in(arguments).not();
 
             case BETWEEN:
-                return criteriaBuilder.between(root.get(searchCriteria.getKey()), (Comparable) arg, (Comparable)arguments.get(1));
+                return criteriaBuilder.between(root.get(searchCriteria.getKey()), (Comparable) arg, (Comparable) arguments.get(1));
 
             case CONTAINS:
                 return criteriaBuilder.like(root.get(searchCriteria.getKey()), "%" + arg + "%");
@@ -63,6 +62,5 @@ public class GenericSpecification<T> implements Specification<T> {
             default:
                 return null;
         }
-
     }
- }
+}

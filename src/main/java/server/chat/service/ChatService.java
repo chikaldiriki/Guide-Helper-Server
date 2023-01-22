@@ -14,7 +14,12 @@ import server.core.dto.UserDTO;
 import server.core.service.UserService;
 import server.specifications.GenericSpecification;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -46,7 +51,8 @@ public class ChatService {
         GenericSpecification<Chat> specSecondUserToSecond =
                 new GenericSpecification<>("secondUserMail", "eq", secondUserMail);
         Specification<Chat> firstSpec = Specification.where(specFirstUserToFirst).and(specSecondUserToSecond);
-        Specification<Chat> reversedUsersSpec = Specification.where(specFirstUserToSecond).and(specSecondUserToFirst);
+        Specification<Chat> reversedUsersSpec = Specification.where(specFirstUserToSecond)
+                .and(specSecondUserToFirst);
 
         List<Chat> chats = chatRepository.findAll(Specification.where(firstSpec).or(reversedUsersSpec));
         if (chats.isEmpty()) {

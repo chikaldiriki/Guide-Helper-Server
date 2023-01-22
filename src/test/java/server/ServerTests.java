@@ -14,7 +14,4 @@ public class ServerTests {
     @Test
     public void contextLoads() {
     }
-
 }
-
-
