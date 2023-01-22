@@ -7,9 +7,9 @@
 Spring Boot server using MySQL database
 
 ## Functionality
-* REST API for actions with tours, users, and orders based on Three Layer Architecture
-* Client-guide chat via storing chat history in Firebase
-* RAKE(Rapid Automatic Keyword Extraction) algorithm for extracting keywords from dialog messages
+*  REST API for actions with tours, users, and orders based on Three Layer Architecture
+*  Client-guide chat via storing chat history in Firebase
+*  RAKE(Rapid Automatic Keyword Extraction) algorithm for extracting keywords from dialog messages
 
 ## Install
 -   Clone repository: `git clone https://github.com/chikaldiriki/Guide-Helper-Server.git`
